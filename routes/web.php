@@ -1,0 +1,43 @@
+<?php
+
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GetClienteImageController;
+use App\Http\Controllers\PagoController;
+use App\Http\Controllers\PrestamoController;
+use App\Http\Middleware\CobradorMiddleware;
+use App\Jobs\ProximoPagoJob;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/register', [AuthController::class, 'register_view'])->name('register');
+Route::post('/register', [AuthController::class, 'register'])->name('register.post');
+
+Route::get('/login', [AuthController::class, 'login_view'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+
+Route::middleware(['auth', CobradorMiddleware::class])->group(function(){
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    
+
+    //prox feat: get imagenes privadas
+    Route::get('/imagenes/{clienteId}', [GetClienteImageController::class, 'mostrar'])->name('get.imagen');
+    
+    //apis    
+    Route::post('/api/cliente', [ClienteController::class, 'store'])->name('cliente.store');
+    Route::get('/api/cliente', [ClienteController::class, 'index']);
+    Route::get('/api/cliente/{id}', [ClienteController::class, 'show']);
+
+    Route::post('/api/prestamo', [PrestamoController::class, 'store']);
+    Route::get('/api/prestamo', [PrestamoController::class, 'index']);
+
+    Route::get('/api/pago/{id}', [PagoController::class, 'show']);
+    Route::post('/api/pago/{code}', [PagoController::class, 'update']);
+    
+});
+
+
+Route::get('/debug', function(){
+   
+});
