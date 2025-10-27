@@ -11,17 +11,15 @@ function format_monto(int $monto)
 
 function format_fecha($fecha, $diff = false)
 {
-    if ($diff == true) {
-        $fechaForm = Carbon::parse($fecha);
-        if ($fechaForm->isToday()) {
-            return "hoy";
-        }
+    $fechaForm = Carbon::parse($fecha);
+
+    if ($fechaForm->isToday()) {
+        return "hoy";
+    }
+
+    if ($diff) {
         return $fechaForm->diffForHumans();
     } else {
-        $fechaForm = Carbon::parse($fecha);
-        if ($fechaForm->isToday()) {
-            return "hoy";
-        }
         return $fechaForm->format('d-m-Y');
     }
 }
@@ -29,6 +27,7 @@ function format_fecha($fecha, $diff = false)
 function set_ciudad($id)
 {
     $ciudades = [
+        20 => 'Asuncion',
         1 => "Areguá",
         2 => 'Capiatá',
         3 => 'Fernando de la Mora',
@@ -53,7 +52,6 @@ function set_ciudad($id)
     foreach ($ciudades as $index => $ciudad) {
         if ($id == $index) {
             return $ciudad;
-            break;
         }
     }
 }

@@ -22,7 +22,7 @@ class UpdatePagoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'monto' => 'nullable|required|numeric',
+            'monto_pagado' => 'nullable|required|numeric',
             'estado' => 'nullable|required',
             'observaciones' => 'nullable'
         ];

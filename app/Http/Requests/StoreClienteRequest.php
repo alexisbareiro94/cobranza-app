@@ -27,11 +27,10 @@ class StoreClienteRequest extends FormRequest
             'telefono' => 'required|numeric',
             'direccion' => 'required|string',
             'geo' => 'required',
-            'imagen' => 'nullable|image',
-            'activo' => 'required|boolean',
+            'imagen' => 'nullable|image',            
             'referencia' => 'nullable',
             'nro_ci' => 'required|numeric|unique:clientes,nro_ci',
-            'ciudad' => 'required|numeric|min:1|max:19'
+            'ciudad' => 'required|numeric|min:1|max:20'
         ];
     }
 }

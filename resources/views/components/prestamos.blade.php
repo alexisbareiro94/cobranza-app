@@ -3,8 +3,7 @@
         <div class="flex justify-between items-start">
             <div>
                 <div class="flex" >
-                    <h3 class="font-medium">{{ ucfirst($prestamo->cliente->nombre) }}</h3>
-                    
+                    <h3 class="font-medium">{{ ucfirst($prestamo->cliente->nombre) }}</h3>                    
                     <select class="ml-3 text-sm px-2 py-1 border border-gray-300 rounded-md"
                             name="prestamos" id="prestamos">
                             <option value="" selected disabled>Ver Pagos</option>
@@ -48,7 +47,7 @@
                 {{ set_estado_pago($prestamo->proximo_pago->estado) }}
             </span>
             <div class="flex gap-6">
-                <button class="text-sm font-semibold bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 cursor-pointer transition-all active:scale-90"
+                <button class="gestionar-pago text-sm font-semibold bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 cursor-pointer transition-all active:scale-90"
                     data-id="{{ $prestamo->proximo_pago->id }}" id="gestionar-pago"
                 >
                     Gestionar pago
@@ -64,7 +63,5 @@
             </div>
             <span class="text-gray-500 text-[10px] absolute -bottom-3.5">Código: #{{ $prestamo->proximo_pago->codigo }}</span>
         </div>
-    </div>
-    @include('include.gestion-pago')
-
+    </div>    
 </div>

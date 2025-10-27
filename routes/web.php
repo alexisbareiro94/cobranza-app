@@ -6,8 +6,10 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GetClienteImageController;
 use App\Http\Controllers\PagoController;
 use App\Http\Controllers\PrestamoController;
+use App\Http\Controllers\RutaController;
 use App\Http\Middleware\CobradorMiddleware;
 use App\Jobs\ProximoPagoJob;
+use App\Models\Pago;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 
@@ -19,7 +21,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 
 Route::middleware(['auth', CobradorMiddleware::class])->group(function(){
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-    
+    Route::get('/ubicaciones', [RutaController::class, 'index_view'])->name('ruta.index');
 
     //prox feat: get imagenes privadas
     Route::get('/imagenes/{clienteId}', [GetClienteImageController::class, 'mostrar'])->name('get.imagen');
@@ -34,10 +36,15 @@ Route::middleware(['auth', CobradorMiddleware::class])->group(function(){
 
     Route::get('/api/pago/{id}', [PagoController::class, 'show']);
     Route::post('/api/pago/{code}', [PagoController::class, 'update']);
+
+    Route::get('/api/prestamo', [PrestamoController::class, 'index']);
+
+    Route::get('/api/ruta', [RutaController::class, 'index']);
     
 });
 
 
-Route::get('/debug', function(){
-   
+Route::get('/debug', function () {
+
+    
 });

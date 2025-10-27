@@ -69,6 +69,7 @@
                         <label for="ciudad" class="block mb-1 text-sm font-medium text-gray-800">Ciudad</label>
                         <select name="ciudad" id="ciudad" class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none bg-gray-50">
                             <option value="" disabled selected>-Seleccionar-</option>
+                            <option value="20">Asuncion</option>
                             <option value="1">Areguá</option>
                             <option value="2">Capiatá</option>
                             <option value="3">Fernando de la Mora</option>
@@ -134,12 +135,12 @@
                         </div>
                     </div>
 
-                    <!-- Activo -->
+                    {{-- <!-- Activo -->
                     <div class="flex items-center">
                         <input type="checkbox" id="activo" name="activo" value="1"
                             class="w-4 h-4 text-green-600 bg-gray-50 border-gray-300 rounded focus:ring-green-500 focus:ring-2">
                         <label for="activo" class="ml-2 text-sm text-gray-800">Cliente activo</label>
-                    </div>
+                    </div> --}}
 
                     <!-- Referencia -->
                     <div>

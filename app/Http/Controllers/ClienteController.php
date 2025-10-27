@@ -20,7 +20,7 @@ class ClienteController extends Controller
             }
             $data['cobrador_id'] = auth()->user()->id;
             Cliente::create($data);
-
+            
             return response()->json([
                 'message' => 'Cliente Agregado',
             ]);
@@ -42,7 +42,7 @@ class ClienteController extends Controller
                     ->orWhereLike('telefono', "%$q");
             }
 
-            $clientes = $query->get();
+            $clientes = $query->orderByDesc('created_at')->get();
 
             return response()->json([
                 'data' => $clientes,

@@ -1,3 +1,4 @@
+{{-- prestamos-component.js --}}
 <div id="modal-gestion-pago"
     class="hidden fixed inset-0 z-50 flex justify-center items-center bg-black/10  transition-all duration-200">
     <div id="modal-in-out" class="relative w-full max-w-md max-h-[90vh] p-4 animate-modal-in ">
@@ -56,7 +57,7 @@
                             pago</label>
                         <select id="estado-pago" name="estado"
                             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition">
-                            <option value="pagado">Pagado</option>
+                            <option selected value="pagado">Pagado</option>
                             <option value="parcial">Pago parcial</option>
                             <option value="no_pagado">No pagado</option>
                         </select>

@@ -1,3 +1,8 @@
+import moment from 'moment';
+import 'moment/locale/es';
+
+moment.locale('es'); // Configuración global
+
 export const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute('content');
 export const url = 'http://127.0.0.1:8000/api'
 
@@ -63,6 +68,80 @@ export const formatDate = value => {
     return fecha.toLocaleString('es-PY', {
         day: '2-digit',
         month: '2-digit',
-        year: 'numeric',        
+        year: 'numeric',
     }).replace(',', ' -');
 }
+
+export function setEstadoPago(estado) {
+    const estados = {
+        pagado: 'Pagado',
+        parcial: 'Parcial',
+        no_pagado: 'No Pagado',
+        pendiente: 'Pendiente'
+    };
+
+    return estados[estado] || null;
+}
+
+export function setCiudad(id) {
+    const ciudades = {
+        20: 'Asuncion',
+        1: "Areguá",
+        2: "Capiatá",
+        3: "Fernando de la Mora",
+        4: "Guarambaré",
+        5: "Itá",
+        6: "Itauguá",
+        7: "Julián Augusto Saldívar",
+        8: "Lambaré",
+        9: "Limpio",
+        10: "Luque",
+        11: "Mariano Roque Alonso",
+        12: "Ñemby",
+        13: "Nueva Italia",
+        14: "San Antonio",
+        15: "San Lorenzo",
+        16: "Villa Elisa",
+        17: "Villeta",
+        18: "Ypacaraí",
+        19: "Ypané"
+    };
+
+    return ciudades[id] || null;
+}
+
+
+export function formatFecha(fecha, diff = false) {
+    const fechaForm = moment(fecha);
+    
+    if (fechaForm.isSame(moment(), 'day')) {
+        return 'hoy';
+    }
+
+    if (diff) {
+        const dias = moment().diff(fechaForm, 'days');
+        
+        if (dias >= 7 && dias < 30) {
+            const semanas = Math.floor(dias / 7);
+            return `hace ${semanas} ${semanas === 1 ? 'semana' : 'semanas'}`;
+        }
+        
+        return fechaForm.fromNow();
+    } else {
+        return fechaForm.format('DD-MM-YYYY');
+    }
+}
+
+
+export function verificarFecha(valor) {
+    const fecha = moment(valor);
+    const hoy = moment().startOf('day'); // para comparar solo la fecha sin hora
+
+    if (fecha.isBefore(hoy, 'day')) {
+        return 'Venció';
+    } else {
+        return 'Vence';
+    }
+}
+
+export const MAPBOX_TOKEN = "pk.eyJ1IjoiYWxleGlzZ2IiLCJhIjoiY203bWI0ZWNqMGloNzJrcTVzOTFhY3d5NCJ9.teEQeq-xDdyTSJtX5qGtTw";

@@ -49,4 +49,8 @@ class Prestamo extends Model
             })
             ->orderBy('numero_cuota');
     }
+
+    public function historial(){
+        return $this->hasMany(Historial::class, 'prestamo_id');
+    }
 }

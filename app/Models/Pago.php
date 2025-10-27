@@ -30,4 +30,8 @@ class Pago extends Model
     {
         return $this->belongsTo(Prestamo::class);
     }
+
+    public function historial(){
+        return $this->hasMany(Historial::class, 'pago_id');
+    }
 }

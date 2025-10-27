@@ -1,4 +1,4 @@
-<div class="flex items-center bg-gray-100 rounded-2xl shadow-md mb-2 p-2 hover:shadow-lg transition cursor-pointer">
+<div data-id="{{ $cliente->id }}" class="clientes flex items-center bg-gray-100 rounded-2xl shadow-md mb-2 p-2 hover:shadow-lg transition cursor-pointer">
     {{-- Imagen del cliente --}}
     <div class="w-22 h-24 rounded-xl overflow-hidden flex-shrink-0 bg-white">
         @if ($cliente->imagen)
@@ -19,8 +19,8 @@
             <h3 class="text-lg font-semibold text-gray-800">{{ $cliente->nombre }}</h3>
             @if($cliente->activo)
                 <span class="px-2 py-1 mt-1 text-xs font-medium bg-green-100 text-green-700 rounded-full">Activo</span>
-            @else
-                <span class="px-2 py-1 text-xs font-medium bg-red-100 text-red-700 rounded-full">Inactivo</span>
+            {{-- @else
+                <span class="px-2 py-1 text-xs font-medium bg-red-100 text-red-700 rounded-full">Inactivo</span> --}}
             @endif
         </div>
 

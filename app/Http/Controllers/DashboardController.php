@@ -21,8 +21,8 @@ class DashboardController extends Controller
         $clientes = Cliente::where('cobrador_id', auth()->user()->id)
             ->orderByDesc('created_at')
             ->get()
-            ->take(3);
-
+            ->take(4);
+            
         return view('dashboard', [
             'clientes' => $clientes,
             'prestamos' => $prestamos,
