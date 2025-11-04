@@ -1,4 +1,4 @@
-import { csrfToken, url } from './utils'
+import { csrfToken } from './utils'
 
 let timeOut;
 document.getElementById('input-buscar-cliente').addEventListener('input', e => {

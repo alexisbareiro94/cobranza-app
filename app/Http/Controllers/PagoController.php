@@ -24,7 +24,7 @@ class PagoController extends Controller
     public function update(UpdatePagoRequest $request, string $code){        
         try{
             $data = $request->validated();
-            $pago = Pago::where('codigo', $code)->first();
+            $pago = Pago::where('codigo', $code)->where('cobrador_id', auth()->user()->id)->first();
             $data['fecha_pago'] = now()->format('Y-m-d');
             // return response()->json($data);
             $pago->update($data);

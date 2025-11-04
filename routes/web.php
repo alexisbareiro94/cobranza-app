@@ -21,6 +21,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 
 Route::middleware(['auth', CobradorMiddleware::class])->group(function(){
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/ubicaciones', [RutaController::class, 'index_view'])->name('ruta.index');
 
     //prox feat: get imagenes privadas

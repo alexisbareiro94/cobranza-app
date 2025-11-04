@@ -1,10 +1,10 @@
 import mapboxgl from 'mapbox-gl';
-import { MAPBOX_TOKEN } from './utils';
+import { MAPBOX_TOKEN, $ } from './utils';
 import axios from 'axios';
 mapboxgl.accessToken = MAPBOX_TOKEN;
 
 let userCoords;
-let map; // 👈 definimos map aquí para usarlo en cualquier parte
+let map; 
 
 async function initMapa() {
     if (navigator.geolocation) {
@@ -50,18 +50,20 @@ async function initMapa() {
     }
 }
 
-document.getElementById('btnUbicacion').addEventListener('click', () => {
-    if (map && userCoords) {
-        map.flyTo({
-            center: userCoords,
-            zoom: 18,
-            speed: 1.5,
-            curve: 1.2
-        });
-    } else {
-        alert('Ubicación no disponible aún.');
-    }
-});
+if($('#btnUbicacion')){
+    document.getElementById('btnUbicacion').addEventListener('click', () => {
+        if (map && userCoords) {
+            map.flyTo({
+                center: userCoords,
+                zoom: 18,
+                speed: 1.5,
+                curve: 1.2
+            });
+        } else {
+            alert('Ubicación no disponible aún.');
+        }
+    });
+}
 
 function defaultMapa() {
     map = new mapboxgl.Map({
@@ -106,4 +108,7 @@ async function getRutas(map) {
     }
 }
 
-initMapa();
+if (window.location.pathname === '/ubicaciones') {
+    initMapa();
+}
+

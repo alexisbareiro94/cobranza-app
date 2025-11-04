@@ -15,7 +15,9 @@ class RutaController extends Controller
     public function index()
     {
         try{
-            $clientes = Cliente::select('id', 'nombre', 'geo')->get();
+            $clientes = Cliente::select('id', 'nombre', 'geo')
+                ->where('cobrador_id', auth()->user()->id)
+                ->get();
             
             $map = [];
             foreach ($clientes as $cliente) {
