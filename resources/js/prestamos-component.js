@@ -102,7 +102,7 @@ function abrirModal() {
         data.append('observaciones', observaciones);
 
         try {
-            const res = await axios.post(`${url}/pago/${codigo}`, data);
+            const res = await axios.post(`api/pago/${codigo}`, data);
             showToast('Pago realizado');
             $('#modal-gestion-pago').classList.add('hidden');
             await renderPrestamos();

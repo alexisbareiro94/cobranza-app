@@ -42,7 +42,9 @@ class ClienteController extends Controller
                     ->orWhereLike('telefono', "%$q");
             }
 
-            $clientes = $query->orderByDesc('created_at')->get();
+            $clientes = $query->where('cobrador_id', auth()->user()->id)
+                ->orderByDesc('created_at')
+                ->get();
 
             return response()->json([
                 'data' => $clientes,
