@@ -6,7 +6,7 @@ document.getElementById('input-buscar-cliente').addEventListener('input', e => {
     timeOut = setTimeout(async () => {
         const q = e.target.value.trim()
         try {
-            const res = await fetch(`${url}/cliente?q=${q}`);
+            const res = await fetch(`/api/cliente?q=${q}`);
             const data = await res.json();
             if (!res.ok) {
                 throw data
@@ -113,7 +113,7 @@ function setClienteId() {
 
 async function getCliente(id) {
     try {
-        const res = await fetch(`${url}/cliente/${id}`);
+        const res = await fetch(`/api/cliente/${id}`);
         const data = await res.json();
         if (!res.ok) {
             throw data;

@@ -123,7 +123,7 @@ document.getElementById('add-cliente-form').addEventListener('submit', async e =
     formData.append('ciudad', ciudad);
 
     try {
-        const res = await fetch('http://127.0.0.1:8000/api/cliente', {
+        const res = await fetch('/api/cliente', {
             method: 'POST',
             headers: {
                 'X-CSRF-TOKEN': csrfToken,

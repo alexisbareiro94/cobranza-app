@@ -145,7 +145,7 @@ document.getElementById('add-contrato-form').addEventListener('submit', async e 
     console.log(fechas);
 
     try {
-        const res = await fetch(`${url}/prestamo`, {
+        const res = await fetch(`/api/prestamo`, {
             method: 'POST',
             headers: {
                 'X-CSRF-TOKEN': csrfToken,

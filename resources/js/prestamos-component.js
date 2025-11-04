@@ -5,7 +5,7 @@ import axios from 'axios';
 gestionPago();
 const getPago = async id => {
         try {            
-            const res = await axios.get(`${url}/pago/${id}`);
+            const res = await axios.get(`/api/pago/${id}`);
             return res.data.data
         } catch (err) {
             console.log(err)
