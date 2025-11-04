@@ -1,9 +1,9 @@
-<aside class="hidden md:flex flex-col w-64 bg-gradient-to-b from-gray-100 to-gray-200 text-green-500 p-6 space-y-6">
+<aside class="hidden md:flex flex-col w-64 bg-gradient-to-b from-gray-100  to-gray-200 text-green-500 p-6 space-y-6">
     <div>
         <h1 class="text-xl font-bold">Panel del cobrador</h1>
     </div>
     <nav class="flex flex-col space-y-3">
-        <a href="/" class="flex items-center space-x-2 hover:bg-green-700 p-2 rounded">
+        <a href="/" class="flex items-center space-x-2 animation-all {{ request()->routeIs('dashboard') ? 'text-green-700 bg-green-200' :'' }} hover:bg-green-400 p-2 rounded">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
                 <path
                     d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
@@ -12,7 +12,7 @@
             </svg>
             <span>Inicio</span>
         </a>
-        <a href="#" class="flex items-center space-x-2 hover:bg-green-700 p-2 rounded">
+        <a href="#" class="flex items-center space-x-2 animation-all hover:bg-green-700 p-2 rounded">
             <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                 fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -20,7 +20,7 @@
             </svg>
             <span>Historial</span>
         </a>
-        <a href="#" class="flex items-center space-x-2 hover:bg-green-700 p-2 rounded">
+        <a href="#" class="flex items-center space-x-2 animation-all hover:bg-green-700 p-2 rounded">
             <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                 fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -28,7 +28,7 @@
             </svg>
             <span>Reportes</span>
         </a>
-        <a href="#" class="flex items-center space-x-2 hover:bg-green-700 p-2 rounded">
+        <a href="#" class="flex items-center space-x-2 animation-all hover:bg-green-700 p-2 rounded">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="size-5">
                 <path stroke-linecap="round" stroke-linejoin="round"

@@ -146,27 +146,26 @@ export function verificarFecha(valor) {
 
 export const MAPBOX_TOKEN = "pk.eyJ1IjoiYWxleGlzZ2IiLCJhIjoiY203bWI0ZWNqMGloNzJrcTVzOTFhY3d5NCJ9.teEQeq-xDdyTSJtX5qGtTw";
 
-export function cerrarModalConAnimacion(idBotonCierre, modalPrincipal, modalToAnimate) {
-    $(`#${idBotonCierre}`).addEventListener('click', e => {
-        const gestionPago = $(`#${modalPrincipal}`);
-        const modal = $(`#${modalToAnimate}`);
-        if (modal.classList.contains('animate-modal-in')) {
-            modal.classList.replace('animate-modal-in', 'animate-modal-out');
-        } else {
-            modal.classList.add('animate-modal-out');
-        }
-
-        modal.addEventListener('animationend', () => {
-            gestionPago.classList.add('hidden');
-            modal.classList.remove('animate-modal-out');
-            modal.classList.add('animate-modal-in');
-        }, { once: true });
-    });
-}
-
 export function abrirModalConAnimacion(divToAnimate) {
     const modal = $(`#${divToAnimate}`)
     if (modal.classList.contains('animate-modal-out')) {
         modal.classList.replace('animate-modal-out', "animate-modal-in")
     }
 }
+
+export function cerrarModalConAnimacion(modalPrincipal, modalToAnimate) {
+    const modalUno = $(`#${modalPrincipal}`);
+    const modal = $(`#${modalToAnimate}`);
+    if (modal.classList.contains('animate-modal-in')) {
+        modal.classList.replace('animate-modal-in', 'animate-modal-out');
+    } else {
+        modal.classList.add('animate-modal-out');
+    }
+
+    modal.addEventListener('animationend', () => {
+        modalUno.classList.add('hidden');
+        modal.classList.remove('animate-modal-out');
+        modal.classList.add('animate-modal-in');
+    }, { once: true });
+}
+

@@ -62,9 +62,12 @@
             </div>
 
             <div class="xl2:hidden mt-6 font-semibold flex items-center justify-center">
-                <button class="bg-gray-200 text-sm text-center px-4 py-2 rounded-md">
+                <button id="abrir-todos-clientes" class="bg-gray-200 text-sm text-center px-4 py-2 rounded-md transition active:scale-90">
                     Ver Clientes
                 </button>
+                
+                
+                <x-todos-clientes :$clientes />                
             </div>
 
             <div id="clientes-container" class="hidden xl2:block mt-4 font-semibold">
