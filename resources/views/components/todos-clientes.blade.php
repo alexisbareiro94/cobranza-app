@@ -1,6 +1,6 @@
 <!-- Main modal -->
 <div id="modal-todos-clientes"
-    class="hidden fixed inset-0 z-50 flex justify-center items-center w-full h-full bg-black/40">
+    class="hidden fixed inset-0 z-50 flex justify-center items-center w-full h-full bg-black/20">
     <div id="clientes-animate" class="relative p-4 w-full max-w-md max-h-full animate-modal-in">
         <!-- Modal content -->
         <div class="relative bg-white rounded-xl shadow-lg overflow-hidden">
