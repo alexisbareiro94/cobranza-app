@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { csrfToken } from './utils'
 
 let timeOut;
@@ -5,14 +6,13 @@ document.getElementById('input-buscar-cliente').addEventListener('input', e => {
     clearTimeout(timeOut);
     timeOut = setTimeout(async () => {
         const q = e.target.value.trim()
-        try {
-            const res = await fetch(`/api/cliente?q=${q}`);
-            const data = await res.json();
-            if (!res.ok) {
-                throw data
-            }
-            renderClientes(data.data);
+        try {            
+            const res = await axios.get(`/api/cliente?q=${q}`);
+            const data = res.data.data;
+            console.log(res)
+            renderClientes(data);
         } catch (err) {
+            console.error(err)
         }
 
     }, 300);

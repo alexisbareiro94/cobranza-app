@@ -34,20 +34,20 @@ class ClienteController extends Controller
     public function index(Request $request){
         try{
             $q = $request->query('q');
-            $query = Cliente::query();
+            $query = Cliente::query()
+                ->where('cobrador_id', auth()->user()->id);
 
             if(filled($q)){
                 $query->whereLike('nombre', "%$q%")
                     ->orWhereLike("nro_ci", "%$q%")
-                    ->orWhereLike('telefono', "%$q");
+                    ->orWhereLike('telefono', "%$q%");
             }
 
-            $clientes = $query->where('cobrador_id', auth()->user()->id)
-                ->orderByDesc('created_at')
-                ->get();
+            $clientes = $query->orderByDesc('created_at')->get();
 
             return response()->json([
                 'data' => $clientes,
+                'cobrador_id' => auth()->user()->id,
             ]);
         }catch(\Exception $e){
             return response()->json([

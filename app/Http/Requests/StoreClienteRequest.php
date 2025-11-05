@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreClienteRequest extends FormRequest
 {
@@ -23,13 +24,17 @@ class StoreClienteRequest extends FormRequest
     {
         return [
             'nombre' => 'required|string',
-            'correo' => 'required|email|unique:clientes,correo',
+            'correo' => ['required', 'email' ,Rule::unique('clientes')->where(function($q){
+                $q->where('cobrador_id', auth()->user()->id);
+            })],
             'telefono' => 'required|numeric',
             'direccion' => 'required|string',
             'geo' => 'required',
             'imagen' => 'nullable|image',            
             'referencia' => 'nullable',
-            'nro_ci' => 'required|numeric|unique:clientes,nro_ci',
+            'nro_ci' => ['required','numeric', Rule::unique('clientes')->where(function($q){
+                $q->where('cobrador_id', auth()->user()->id);
+            })],
             'ciudad' => 'required|numeric|min:1|max:20'
         ];
     }
