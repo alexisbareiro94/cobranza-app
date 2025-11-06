@@ -81,14 +81,14 @@ function setFechaFin() {
     const rango = document.getElementById('rango').value;
     const fechaFinEstimado = document.getElementById('fecha_fin_estimado');
     const cuotas = document.getElementById('cantidad_cuotas').value;
-
+    console.log('message')
     const diccionario = {
         semanal: 'week',
         mensual: 'month',
         quincenal: 'day',
         diario: 'day',
     };
-
+    
     let fraccion;
     Object.entries(diccionario).forEach(([index, value]) => {
         if (index === rango) {
@@ -100,13 +100,15 @@ function setFechaFin() {
     let fechas = [];
     let contador = 0;
     let fechaTemp = fechaInicio.clone();
-
-    while (fechas.length < cuotas) {
-        if (fechaTemp.day() !== 0) {
+    console.log(fechaTemp)
+    while (fechas.length < cuotas) {        
+        if (fechaTemp.day() !== 0) {            
             fechas.push(fechaTemp.format('YYYY-MM-DD'));
-            fechaFinEstimado.value = fechaTemp.format('YYYY-MM-DD');
-            contador++;
+            fechaFinEstimado.value = fechaTemp.format('YYYY-MM-DD');            
+        }else{            
+            fechas.push(fechaTemp.format('YYYY-MM-DD'));
         }
+        contador++;
         fechaTemp.add(1, fraccion);
     }
 
