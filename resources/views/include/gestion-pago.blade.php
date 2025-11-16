@@ -22,18 +22,37 @@
             <!-- Body -->
             <div class="p-5 overflow-y-auto max-h-[65vh] flex-grow space-y-6">
                 <!-- Cuota -->
-                <div class="border border-gray-100 rounded-lg p-4 bg-gray-100 shadow-md">
-                    <div class="flex justify-between items-center mb-2">
-                        <h4 id="nro-cuota-pago" class="font-semibold text-gray-800">Cuota nro: <span class="font-normal">1</span></h4>
-                        <p class="text-sm text-gray-600">Vence: 
-                            <span id="vence-pago" class="font-semibold text-green-700">16-10-2025</span>
+                <div class="border border-gray-200 rounded-xl p-5 bg-white shadow-sm">
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 id="nro-cuota-pago" class="font-semibold text-gray-800">Cuota nro: <span
+                                class="font-normal">1</span></h4>
+                        <p class="text-sm text-gray-500">Vence:
+                            <span id="vence-pago" class="font-medium text-green-700">16-10-2025</span>
                         </p>
                     </div>
-                    <p class="text-gray-800 font-medium">
-                        Monto: <span id="monto-pago-pago" class="text-green-700 font-semibold">Gs. 600.000</span>
-                    </p>
-                </div>
 
+                    <div class="space-y-1.5 mb-3">
+                        <p class="text-gray-800 flex justify-between">
+                            Total a pagar: <span id="total-prestamo-pago" class="font-semibold text-green-700">
+                                Gs. 600.000</span>
+                        </p>
+                        <p class="text-gray-800 flex justify-between">
+                            Total restante: <span id="prestamo-restante-pago" class="font-semibold text-green-700">
+                                Gs. 550.000</span>
+                        </p>
+                        <p class="text-gray-800 flex justify-between">
+                            Monto por cuota: <span id="monto-cuota" class="font-semibold text-green-700">
+                                Gs. 100.000</span>
+                        </p>
+                    </div>
+
+                    <div id="pago-parcial" class="hidden bg-orange-100  rounded-lg p-3 mt-2">
+                        <p class="text-orange-400 text-sm">
+                            Se realizó un pago parcial de: <span id="monto-parcial" class="font-medium text-orange-500">Gs. 50.000</span>.
+                        </p>
+                        <p id="fecha-pago" class="text-gray-500 text-xs mt-1">16-10-25 / 08:45</p>
+                    </div>
+                </div>
                 <!-- Cliente -->
                 <div class="text-sm">
                     <p class="text-gray-700 font-semibold">Cliente:</p>
@@ -67,7 +86,8 @@
                     <div>
                         <label for="observaciones-pago"
                             class="block text-sm font-semibold text-gray-700 mb-1">Observaciones</label>
-                        <textarea id="observaciones-pago" name="observaciones-pago" rows="3" placeholder="Ej: Pago recibido en efectivo..."
+                        <textarea id="observaciones-pago" name="observaciones-pago" rows="3"
+                            placeholder="Ej: Pago recibido en efectivo..."
                             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"></textarea>
                     </div>
 

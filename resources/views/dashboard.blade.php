@@ -93,11 +93,13 @@
             @include('include.gestion-pago')
 
             <div class="flex justify-center mt-12">
-                <button
+                <button id="abrir-proximos-pagos"
                     class="bg-gray-200 text-gray-600 font-semibold px-3 py-1 rounded-md cursor-pointer hover:bg-gray-300 transition-all active:scale-90">
                     Ver próximos
                 </button>
             </div>
+
+            <x-proximos-pagos />
         </div>
     </div> 
 @endsection

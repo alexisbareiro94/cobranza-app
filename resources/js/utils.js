@@ -72,6 +72,19 @@ export const formatDate = value => {
     }).replace(',', ' -');
 }
 
+export const formatDateHora = value => {
+    const fecha = new Date(value);
+    return fecha.toLocaleString('es-PY', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',        
+        hour12: false,
+    }).replace(',', ' -');
+}
+
+
 export function setEstadoPago(estado) {
     const estados = {
         pagado: 'Pagado',

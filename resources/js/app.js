@@ -6,3 +6,4 @@ import './buscar-cliente-component';
 import './prestamos-component';
 import './rutas';
 import './todos-clientes-compoent';
+import './proximos-pagos-component';

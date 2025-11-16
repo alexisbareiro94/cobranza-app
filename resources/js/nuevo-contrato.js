@@ -56,8 +56,7 @@ function setCantidadCuotas() {
         return;
     }
     cantidadCuotas.value = '';
-    cantidadCuotas.value = Math.round(montoTotal / montoCuota);
-    console.log(rango.value, montoTotal, montoCuota)
+    cantidadCuotas.value = Math.round(montoTotal / montoCuota);    
 }
 
 document.getElementById('fecha_inicio').addEventListener('change', () => {
@@ -99,8 +98,7 @@ function setFechaFin() {
     const fechaInicio = moment(fecha);
     let fechas = [];
     let contador = 0;
-    let fechaTemp = fechaInicio.clone();
-    console.log(fechaTemp)
+    let fechaTemp = fechaInicio.clone();    
     while (fechas.length < cuotas) {        
         if (fechaTemp.day() !== 0) {            
             fechas.push(fechaTemp.format('YYYY-MM-DD'));
@@ -142,9 +140,7 @@ document.getElementById('add-contrato-form').addEventListener('submit', async e 
     formData.append('fecha_fin_estimado', fechaFinEstimado);
     formData.append('observaciones', observaciones);
     formData.append('rango', rango);
-    formData.append('fechas', fechas);
-
-    console.log(fechas);
+    formData.append('fechas', fechas);    
 
     try {
         const res = await fetch(`/api/prestamo`, {
@@ -165,8 +161,7 @@ document.getElementById('add-contrato-form').addEventListener('submit', async e 
         document.getElementById('cliente_id').value = ''
         renderCliente(clienteId);
         renderPrestamos();        
-        showToast('Préstamo Registrado con éxito');
-        console.log(data)
+        showToast('Préstamo Registrado con éxito');        
     } catch (err) {
         console.log(err)
         // err.error.forEach(item => {
@@ -230,15 +225,12 @@ async function renderCliente(id) {
                 <div class="ml-4 flex flex-col gap-2">
                     <a href="#" class="px-3 py-1 bg-emerald-500 text-white text-sm rounded-lg hover:bg-emerald-600">Ver</a>
                     <a href="#" class="px-3 py-1 bg-blue-500 text-white text-sm rounded-lg hover:bg-blue-600">Editar</a>
-                </div>`
-                console.log(cont)
+                </div>`                
             } else {
                 return;
             }
 
         })
-
-        console.log(clientes)
     } catch (err) {
         console.log(err)
     }

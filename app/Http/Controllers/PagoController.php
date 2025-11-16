@@ -10,7 +10,7 @@ class PagoController extends Controller
 {
     public function show(string $id){
         try{
-            $pago = Pago::with('cliente')->where('cobrador_id', auth()->user()->id)->findOrFail($id);            
+            $pago = Pago::with('cliente', 'prestamo')->where('cobrador_id', auth()->user()->id)->findOrFail($id);            
             return response()->json([
                 'data' => $pago
             ]);
@@ -26,7 +26,7 @@ class PagoController extends Controller
             $data = $request->validated();
             $pago = Pago::where('codigo', $code)->where('cobrador_id', auth()->user()->id)->first();
             $data['fecha_pago'] = now()->format('Y-m-d');
-            // return response()->json($data);
+            $data['saldo_pendiente'] = $pago->saldo_pendiente - $data['monto_pagado'];            
             $pago->update($data);
             return response()->json([
                 'message' => 'pago acuatizado'

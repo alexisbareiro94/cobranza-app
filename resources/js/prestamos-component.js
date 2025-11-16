@@ -23,23 +23,36 @@ function gestionPago() {
             }
             gestionPago.classList.remove('hidden')
             const id = e.target.dataset.id;
-            const pago = await getPago(id);
-
-            console.log(pago);
+            const pago = await getPago(id);            
 
             const codigo = $("#pago-codigo");
             const nroCuota = $("#nro-cuota-pago");
             const vence = $("#vence-pago");
             const cliente = $("#cliente-pago");
             const monto = $("input[id='monto-pago-pago']");
-            // const estado = $("#estado-pago");
-            // const observaciones = $("observaciones-pago");    
+            const totalPrestamo = $('#total-prestamo-pago');
+            const prestamoRestante = $('#prestamo-restante-pago');
+            const montoCuota = $('#monto-cuota');
+            const pagoParcial = $('#pago-parcial');
+            const montoParcial = $('#monto-parcial');
+            const fechaPago = $('#fecha-pago');
+
             codigo.innerText = `código: #${pago.codigo}`
             codigo.dataset.code = pago.codigo;
             nroCuota.innerText = `Numero de cuota: ${pago.numero_cuota}`
             vence.innerText = formatDate(pago.vencimiento);
             cliente.innerText = `${pago.cliente.nombre}`;
             monto.value = `${pago.monto_esperado}`;
+            totalPrestamo.innerText = 'Gs. ' + pago.prestamo.monto_total.toLocaleString('es-PY')
+            prestamoRestante.innerText = 'Gs. ' + pago.prestamo.saldo_pendiente.toLocaleString('es-PY')
+            montoCuota.innerText = 'Gs. ' + pago.monto_esperado.toLocaleString('es-PY'); 
+            console.log(pago.estado)
+            if(pago.estado == 'parcial'){
+                pagoParcial.classList.remove('hidden');
+                montoParcial.innerText = 'Gs. ' + pago.monto_pagado.toLocaleString('es-PY');
+                // fechaPago.innerText = 
+            }
+            
         })
     })
 }

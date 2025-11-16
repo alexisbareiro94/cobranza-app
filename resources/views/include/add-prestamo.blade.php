@@ -69,7 +69,7 @@
                             <option value="" disabled selected>Seleccionar fraccion</option>
                             <option value="mensual">Mensual</option>
                             <option value="semanal">Semanal</option>
-                            <option value="quincenal">Quincenal</option>
+                            <option value="quincenal" disabled>Quincenal</option>
                             <option value="diario">Diario (Lunes a Sábados)</option>
                         </select>
                     </div>

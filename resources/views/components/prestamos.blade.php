@@ -1,5 +1,5 @@
 <div class="space-y-3 mb-3">
-    <div class="bg-gray-100 rounded-lg shadow p-3 hover:shadow-md  transition">
+    <div class="bg-gray-100 rounded-lg shadow p-3 hover:shadow-md transition">
         <div class="flex justify-between items-start">
             <div>
                 <div class="flex" >
@@ -14,7 +14,12 @@
                 </div>
                 <p class="text-sm text-gray-600">{{ $prestamo->cliente->direccion }}, {{ set_ciudad($prestamo->cliente->ciudad) }}</p>
                 <p class="text-sm font-bold text-gray-600 mt-1">
-                    Gs. {{ format_monto($prestamo->monto_cuota) }} | {{ verificar_fecha($prestamo->proximo_pago->vencimiento) }} {{ format_fecha($prestamo->proximo_pago->vencimiento, true) }}
+                    {{-- monto --}}
+                    Gs. {{ format_monto($prestamo->monto_cuota - $prestamo->proximo_pago->monto_pagado) }} |                         
+                    {{-- vence/vencio --}}
+                    {{ verificar_fecha($prestamo->proximo_pago->vencimiento) }} 
+                    {{-- fecha/hoy --}}
+                    {{ format_fecha($prestamo->proximo_pago->vencimiento, true) }}
                 </p>
             </div>
             <div class="flex flex-col space-y-2">
@@ -50,7 +55,7 @@
                 <button class="gestionar-pago text-sm font-semibold bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 cursor-pointer transition-all active:scale-90"
                     data-id="{{ $prestamo->proximo_pago->id }}" id="gestionar-pago"
                 >
-                    Gestionar pago
+                        
                 </button>                
                 <a class="text-blue-600 hover:text-blue-800"
                     href="https://www.google.com/maps/search/?api=1&query={{ $prestamo->cliente->geo }}" target="_blank">

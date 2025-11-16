@@ -15,7 +15,7 @@
 
                 #map {
                     width: 100%;
-                    height: 88vh;
+                    height: 75vh;
                 }
 
                 @media (max-width: 768px) {

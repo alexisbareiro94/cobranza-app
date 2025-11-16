@@ -8,9 +8,6 @@ use App\Http\Controllers\PagoController;
 use App\Http\Controllers\PrestamoController;
 use App\Http\Controllers\RutaController;
 use App\Http\Middleware\CobradorMiddleware;
-use App\Jobs\ProximoPagoJob;
-use App\Models\Pago;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/register', [AuthController::class, 'register_view'])->name('register');

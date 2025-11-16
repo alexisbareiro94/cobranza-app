@@ -17,7 +17,7 @@ function format_fecha($fecha, $diff = false)
         return "hoy";
     }
 
-    if ($diff) {
+    if ($diff == true) {
         return $fechaForm->diffForHumans();
     } else {
         return $fechaForm->format('d-m-Y');

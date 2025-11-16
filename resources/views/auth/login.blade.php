@@ -38,7 +38,7 @@
                     </div>
                     <input type="password" name="password" id="password" placeholder="••••••••"
                         class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition"
-                        required />
+                        required />                    
                 </div>
 
                 <!-- Recordarme -->
