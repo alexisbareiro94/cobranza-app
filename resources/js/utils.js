@@ -21,7 +21,7 @@ export function showToast(message, type = 'success') {
                     <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                 </svg>`;
     toastCont.innerHTML = ` 
-        <div class="relative flex items-center ${typeClass} text-white text-sm w-full font-bold px-4 py-3"
+        <div class="relative flex items-center ${typeClass} text-white text-sm w-full font-bold px-4 py-4"
             role="alert">
             <p class="mx-auto flex gap-2">
                 ${svg}

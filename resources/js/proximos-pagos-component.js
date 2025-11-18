@@ -4,6 +4,7 @@ if($('#abrir-proximos-pagos')){
     $el('#abrir-proximos-pagos', 'click', () => {
         $('#modal-proximos-pagos').classList.remove('hidden');
         abrirModalConAnimacion($('#proximos-pagos-animation').id);
+        // gestionPago();
     });
 }
 
