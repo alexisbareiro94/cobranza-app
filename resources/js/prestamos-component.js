@@ -1,5 +1,5 @@
 import { renderClientes } from './add-cliente';
-import { $, $el, url, formatDate, showToast, $$, formatFecha, setEstadoPago, setCiudad, verificarFecha } from './utils'
+import { $, $el, url, formatDate, showToast, $$, formatFecha, setEstadoPago, setCiudad, verificarFecha,formatDateHora } from './utils'
 import axios from 'axios';
 
 gestionPago();
@@ -36,7 +36,7 @@ function gestionPago() {
             const pagoParcial = $('#pago-parcial');
             const montoParcial = $('#monto-parcial');
             const fechaPago = $('#fecha-pago');
-
+            console.log(pago)
             codigo.innerText = `código: #${pago.codigo}`
             codigo.dataset.code = pago.codigo;
             nroCuota.innerText = `Numero de cuota: ${pago.numero_cuota}`
@@ -50,7 +50,7 @@ function gestionPago() {
             if(pago.estado == 'parcial'){
                 pagoParcial.classList.remove('hidden');
                 montoParcial.innerText = 'Gs. ' + pago.monto_pagado.toLocaleString('es-PY');
-                // fechaPago.innerText = 
+                fechaPago.innerText = formatDateHora(pago.updated_at)
             }
             
         })

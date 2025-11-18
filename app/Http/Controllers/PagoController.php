@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdatePagoRequest;
 use Illuminate\Http\Request;
 use App\Models\Pago;
+use App\Models\Prestamo;
 
 class PagoController extends Controller
 {
@@ -26,10 +27,17 @@ class PagoController extends Controller
             $data = $request->validated();
             $pago = Pago::where('codigo', $code)->where('cobrador_id', auth()->user()->id)->first();
             $data['fecha_pago'] = now()->format('Y-m-d');
-            $data['saldo_pendiente'] = $pago->saldo_pendiente - $data['monto_pagado'];            
+            $prestamo = Prestamo::findOrFail($pago->prestamo_id);            
+            $prestamo->update([
+                'saldo_pendiente' => $prestamo->saldo_pendiente -= $data['monto_pagado'],               
+                'cuotas_pagadas' => $data['estado'] == 'pagado' ? $prestamo->cuotas_pagadas += 1 : $prestamo->cuotas_pagadas,
+            ]);
+
+            $data['monto_pagado'] += $pago->monto_pagado;
+
             $pago->update($data);
             return response()->json([
-                'message' => 'pago acuatizado'
+                'message' => 'pago acuatizado',                
             ]);
         }catch(\Exception $e){
             return response()->json([
