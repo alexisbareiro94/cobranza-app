@@ -55,7 +55,7 @@
                 <button class="gestionar-pago text-sm font-semibold bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 cursor-pointer transition-all active:scale-90"
                     data-id="{{ $prestamo->proximo_pago->id }}" id="gestionar-pago"
                 >
-                        
+                    Gestionar pago
                 </button>                
                 <a class="text-blue-600 hover:text-blue-800"
                     href="https://www.google.com/maps/search/?api=1&query={{ $prestamo->cliente->geo }}" target="_blank">
