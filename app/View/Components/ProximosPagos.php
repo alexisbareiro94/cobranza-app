@@ -15,7 +15,12 @@ class ProximosPagos extends Component
     public $pagos;
     public function __construct()
     {
-        $this->pagos = Pago::where('cobrador_id', auth()->user()->id)->with('prestamo')->get();        
+        $this->pagos = Pago::where('cobrador_id', auth()->user()->id)
+            ->where('estado', 'pendiente')
+            ->with('prestamo.proximo_pago', 'cliente')            
+            ->orderBy('vencimiento')
+            ->get();      
+        
     }
 
     /**
@@ -24,7 +29,7 @@ class ProximosPagos extends Component
     public function render(): View|Closure|string
     {
         return view('components.proximos-pagos', [
-            'prestamo' => $this->pagos,
+            'prestamos' => $this->pagos,
         ]);
     }
 }

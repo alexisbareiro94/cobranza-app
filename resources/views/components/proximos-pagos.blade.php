@@ -23,8 +23,8 @@
 
             <!-- Modal body -->
             <div id="proximos-pagos-body" class="p-4 md:p-5 max-h-[80vh] overflow-y-auto">
-                {{-- @foreach ($prestamos as $prestamo)                                        
-                    <div class="bg-gray-100 rounded-lg shadow p-3 hover:shadow-md">
+                @foreach ($prestamos as $prestamo)                                        
+                    <div class="bg-gray-100 rounded-lg shadow p-3 mb-4 hover:shadow-md">
                         <div class="flex justify-between items-start">
                             <div>
                                 <div class="flex">
@@ -33,8 +33,8 @@
                                 <p class="text-sm text-gray-600">{{ $prestamo->cliente->direccion }},
                                     {{ set_ciudad($prestamo->cliente->ciudad) }}</p>
                                 <p class="text-sm font-bold text-gray-600 mt-1">
-                                    Gs. {{ format_monto($prestamo->monto_cuota) }} |                                    
-                                    vence: {{ format_fecha($prestamo->proximo_pago->vencimiento, false) }}
+                                    Gs. {{ format_monto($prestamo->prestamo->monto_cuota) }} |                                    
+                                    vence: {{ format_fecha($prestamo->vencimiento, false) }}
                                 </p>
                             </div>
                             <div class="flex flex-col space-y-2">
@@ -61,19 +61,19 @@
                             <span id="prueba" @class([
                                 'text-xs px-2 py-1 rounded font-semibold',
                                 'bg-yellow-200 text-yellow-700' =>
-                                    $prestamo->proximo_pago->estado == 'pendiente',
+                                    $prestamo->estado == 'pendiente',
                                 'bg-orange-300 text-orange-700' =>
-                                    $prestamo->proximo_pago->estado == 'parcial',
-                                'bg-red-200 text-red-700' => $prestamo->proximo_pago->estado == 'no_pagado',
+                                    $prestamo->estado == 'parcial',
+                                'bg-red-200 text-red-700' => $prestamo->estado == 'no_pagado',
                                 'bg-green-200 text-green-700' =>
-                                    $prestamo->proximo_pago->estado == 'pagado',
+                                    $prestamo->estado == 'pagado',
                             ])>
-                                {{ set_estado_pago($prestamo->proximo_pago->estado) }}
+                                {{ set_estado_pago($prestamo->estado) }}
                             </span>
                             <div class="flex gap-6">
                                 <button
                                     class="gestionar-pago text-sm font-semibold bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 cursor-pointer transition-all active:scale-90"
-                                    data-id="{{ $prestamo->proximo_pago->id }}" id="gestionar-pago">
+                                    data-id="{{ $prestamo->id }}" id="gestionar-pago">
                                     Gestionar pago
                                 </button>
                                 <a class="text-blue-600 hover:text-blue-800"
@@ -88,10 +88,10 @@
                                 </a>
                             </div>
                             <span class="text-gray-500 text-[10px] absolute -bottom-3.5">Código:
-                                #{{ $prestamo->proximo_pago->codigo }}</span>
+                                #{{ $prestamo->codigo }}</span>
                         </div>
                     </div>
-                @endforeach --}}
+                @endforeach
             </div>
         </div>
     </div>
