@@ -1,5 +1,5 @@
 <!-- Main modal -->
-<div id="modal-proximos-pagos" class="hidden fixed inset-0 z-50 flex justify-center items-center w-full h-full bg-black/20">
+<div id="modal-proximos-pagos" class="hidden fixed inset-0 z-30 flex justify-center items-center w-full h-full bg-black/20">
     <div id="proximos-pagos-animation" class="relative p-4 w-full md:max-w-6xl max-h-full animate-modal-in">
         <!-- Modal content -->
         <div class="relative bg-white rounded-xl shadow-lg overflow-hidden">

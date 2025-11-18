@@ -31,7 +31,7 @@
 </head>
 
 <body class="">
-    <div id="toast-container" class="fixed hidden top-0 right-0 z-50 bg-black/30 text-center w-full items-center"></div>
+    <div id="toast-container" class="fixed hidden top-0 right-0 z-[9999] bg-black/30 text-center w-full items-center"></div>
     <div class="bg-gray-50 min-h-screen flex flex-col md:flex-row">
         @include('layouts.nav-desk')
         <main class="flex-1 pb-16 md:pb-0">
