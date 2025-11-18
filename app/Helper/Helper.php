@@ -101,3 +101,8 @@ function set_code()
     }
     return $code;
 }
+
+function auth_role()
+{
+    return auth()->user()->role;
+}

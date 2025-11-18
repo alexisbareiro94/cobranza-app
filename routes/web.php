@@ -38,6 +38,8 @@ Route::middleware(['auth', CobradorMiddleware::class])->group(function(){
     Route::get('/api/prestamo', [PrestamoController::class, 'index']);
 
     Route::get('/api/ruta', [RutaController::class, 'index']);
+
+    Route::get('/api/ganancias', [PagoController::class, 'ganancias']);
     
 });
 

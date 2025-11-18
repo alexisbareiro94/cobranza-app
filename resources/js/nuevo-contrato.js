@@ -1,5 +1,6 @@
 import { csrfToken, url, showToast, $, $$ } from './utils'
-import { renderPrestamos } from './prestamos-component'
+import { renderPrestamos, renderGanancias } from './prestamos-component'
+
 import axios from 'axios';
 import moment from 'moment';
 
@@ -161,6 +162,7 @@ document.getElementById('add-contrato-form').addEventListener('submit', async e 
         document.getElementById('cliente_id').value = ''
         renderCliente(clienteId);
         renderPrestamos();        
+        renderGanancias();
         showToast('Préstamo Registrado con éxito');        
     } catch (err) {
         console.log(err)

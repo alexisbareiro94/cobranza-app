@@ -7,16 +7,7 @@
     <div class="p-4 space-y-6 md:space-y-0 md:grid md:grid-cols-3 md:gap-6">
         <!-- Resumen rápido -->
         <div class="col-span-1 space-y-3">
-            <div class="bg-gray-100 rounded-lg shadow-sm p-3 text-center">
-                <p class="text-xs text-gray-500">Cobros hoy</p>
-                <p class="text-xl font-bold text-green-700">S/ 420</p>
-                <p class="text-xs text-gray-400">de S/ 800</p>
-            </div>
-            <div class="bg-gray-100 rounded-lg shadow p-3 text-center">
-                <p class="text-xs text-gray-500">Clientes</p>
-                <p class="text-xl font-bold text-gray-800">8/12</p>
-                <p class="text-xs text-gray-400">completados</p>
-            </div>
+           <x-ganancia-diaria />
 
             <!-- Acciones rápidas -->
             <div class="mt-4">

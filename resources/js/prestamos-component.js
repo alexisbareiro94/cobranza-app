@@ -1,29 +1,29 @@
 import { renderClientes } from './add-cliente';
-import { $, $el, url, formatDate, showToast, $$, formatFecha, setEstadoPago, setCiudad, verificarFecha,formatDateHora } from './utils'
+import { $, $el, url, formatDate, showToast, $$, formatFecha, setEstadoPago, setCiudad, verificarFecha, formatDateHora } from './utils'
 import axios from 'axios';
 
 gestionPago();
 const getPago = async id => {
-        try {            
-            const res = await axios.get(`/api/pago/${id}`);
-            return res.data.data
-        } catch (err) {
-            console.log(err)
-        }
+    try {
+        const res = await axios.get(`/api/pago/${id}`);
+        return res.data.data
+    } catch (err) {
+        console.log(err)
     }
+}
 
 function gestionPago() {
     const btns = $$('.gestionar-pago');
     btns.forEach(btn => {
         btn.addEventListener('click', async e => {
             const gestionPago = $('#modal-gestion-pago');
-            const modal = $("#modal-in-out")            
+            const modal = $("#modal-in-out")
             if (modal.classList.contains('animate-modal-out')) {
                 modal.classList.replace('animate-modal-out', "animate-modal-in")
             }
             gestionPago.classList.remove('hidden')
             const id = e.target.dataset.id;
-            const pago = await getPago(id);            
+            const pago = await getPago(id);
 
             const codigo = $("#pago-codigo");
             const nroCuota = $("#nro-cuota-pago");
@@ -45,19 +45,19 @@ function gestionPago() {
             monto.value = `${pago.monto_esperado}`;
             totalPrestamo.innerText = 'Gs. ' + pago.prestamo.monto_total.toLocaleString('es-PY')
             prestamoRestante.innerText = 'Gs. ' + pago.prestamo.saldo_pendiente.toLocaleString('es-PY')
-            montoCuota.innerText = 'Gs. ' + pago.monto_esperado.toLocaleString('es-PY'); 
+            montoCuota.innerText = 'Gs. ' + pago.monto_esperado.toLocaleString('es-PY');
             console.log(pago.estado)
-            if(pago.estado == 'parcial'){
+            if (pago.estado == 'parcial') {
                 pagoParcial.classList.remove('hidden');
                 montoParcial.innerText = 'Gs. ' + pago.monto_pagado.toLocaleString('es-PY');
                 fechaPago.innerText = formatDateHora(pago.updated_at)
             }
-            
+
         })
     })
 }
 
-if($('#cerrar-modal-gestion-pago')){
+if ($('#cerrar-modal-gestion-pago')) {
     cerrarModal();
 }
 function cerrarModal() {
@@ -78,7 +78,7 @@ function cerrarModal() {
     });
 }
 
-if($('#modal-gestion-pago')){
+if ($('#modal-gestion-pago')) {
     abrirModal();
 }
 function abrirModal() {
@@ -113,17 +113,20 @@ function abrirModal() {
         data.append('monto_pagado', monto);
         data.append('estado', estado);
         data.append('observaciones', observaciones);
-
-        try {
-            const res = await axios.post(`api/pago/${codigo}`, data);
-            showToast('Pago realizado');
-            $('#modal-gestion-pago').classList.add('hidden');
-            await renderPrestamos();
-            
-            console.log(res)
-        } catch (err) {
-            console.log(er)
+        $('#modal-gestion-pago').classList.add('hidden');
+        if (!$('#modal-proximos-pagos').classList.contains('hidden')) {
+            $('#modal-proximos-pagos').classList.add('hidden');
         }
+        renderGanancias();
+        // try {
+        //     const res = await axios.post(`api/pago/${codigo}`, data);
+        //     showToast('Pago realizado');
+        //     $('#modal-gestion-pago').classList.add('hidden');
+        //     await renderPrestamos();            
+        //     
+        // } catch (err) {
+        //     console.log(er)
+        // }
     })
 }
 
@@ -227,8 +230,27 @@ export async function renderPrestamos() {
         })
         gestionPago();
         abrirModal();
-        cerrarModal();        
+        cerrarModal();
     } catch (err) {
         console.log(err)
+    }
+}
+
+
+export async function renderGanancias() {
+    const cobrado = $('#cobrado')
+    const montoCobrar = $('#monto-cobrar');
+    const pagos = $('#pagos');
+    try{
+        const res = await axios.get('api/ganancias');
+        const data = res.data;
+        console.log(data)
+
+        cobrado.innerText = `Gs. ${data.cobrado.toLocaleString('es-PY')}`;
+        montoCobrar.innerText = `de Gs. ${data.montoCobrar.toLocaleString('es-PY')}`
+        pagos.innerText = `${data.pagosCompletados}/${data.cantidadPagos    }`
+
+    }catch(err){
+        console.error(err)
     }
 }

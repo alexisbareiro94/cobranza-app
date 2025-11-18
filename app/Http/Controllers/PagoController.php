@@ -47,4 +47,31 @@ class PagoController extends Controller
             ]);
         }
     }
+
+    public function ganancias()
+    {
+        try {
+            $pagos = Pago::whereBetween('fecha_pago', [now()->startOfDay(), now()->endOfDay()])
+                ->where('cobrador_id', auth()->id())
+                ->get();
+            $aCobrar = Pago::where('vencimiento', '<=', now()->endOfDay())->get();
+
+            $cobrado = $pagos->sum('monto_pagado');
+            $pagosCompletados = $pagos->unique('prestamo_id')->count();
+            $montoCobrar = $aCobrar->sum('monto_esperado');
+            $cantidadPagos = $aCobrar->unique('prestamo_id')->count();
+
+            return response()->json([
+                'cobrado' => $cobrado,
+                'pagosCompletados' => $pagosCompletados,
+                'montoCobrar' => $montoCobrar,
+                'cantidadPagos' => $cantidadPagos,
+
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+            ]);
+        }
+    }
 }

@@ -1,0 +1,48 @@
+<?php
+
+namespace App\View\Components;
+
+use App\Models\Pago;
+use Closure;
+use Illuminate\Contracts\View\View;
+use Illuminate\View\Component;
+
+class GananciaDiaria extends Component
+{
+    /**
+     * Create a new component instance.
+     */
+
+    public $cobrado;
+    public $montoCobrar;
+    public $cantidadPagos;
+    public $pagosCompletados;
+
+    public function __construct()
+    {
+        $pagos = Pago::whereBetween('fecha_pago', [now()->startOfDay(), now()->endOfDay()])
+            ->where('cobrador_id', auth()->id())
+            ->get();
+        $aCobrar = Pago::where('vencimiento', '<=', now()->endOfDay())->get();
+        
+        
+
+        $this->cobrado = $pagos->sum('monto_pagado');
+        $this->pagosCompletados = $pagos->unique('prestamo_id')->count();     
+        $this->montoCobrar = $aCobrar->sum('monto_esperado');
+        $this->cantidadPagos = $aCobrar->unique('prestamo_id')->count();             
+    }
+
+    /**
+     * Get the view / contents that represent the component.
+     */
+    public function render(): View|Closure|string
+    {
+        return view('components.ganancia-diaria', [
+            'monto' => $this->cobrado,
+            'cantidad' => $this->cantidadPagos,
+            'montoCobrar' => $this->montoCobrar,
+            'prestamosPagados' => $this->pagosCompletados,
+        ]);
+    }
+}

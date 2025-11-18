@@ -97,7 +97,7 @@
                             class="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 transition">
                             Cancelar
                         </button>
-                        <button type="submit"
+                        <button type="submit" id="btn-aceptar-pago"
                             class="px-4 py-2 text-white bg-green-700 rounded-lg shadow hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-600 transition">
                             Aceptar
                         </button>
