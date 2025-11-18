@@ -117,16 +117,16 @@ function abrirModal() {
         if (!$('#modal-proximos-pagos').classList.contains('hidden')) {
             $('#modal-proximos-pagos').classList.add('hidden');
         }
-        renderGanancias();
-        // try {
-        //     const res = await axios.post(`api/pago/${codigo}`, data);
-        //     showToast('Pago realizado');
-        //     $('#modal-gestion-pago').classList.add('hidden');
-        //     await renderPrestamos();            
-        //     
-        // } catch (err) {
-        //     console.log(er)
-        // }
+    
+        try {
+            const res = await axios.post(`api/pago/${codigo}`, data);
+            showToast('Pago realizado');
+            $('#modal-gestion-pago').classList.add('hidden');
+            await renderPrestamos();            
+            renderGanancias();    
+        } catch (err) {
+            console.log(er)
+        }
     })
 }
 
