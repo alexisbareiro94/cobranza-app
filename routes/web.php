@@ -16,14 +16,14 @@ Route::post('/register', [AuthController::class, 'register'])->name('register.po
 Route::get('/login', [AuthController::class, 'login_view'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 
-Route::middleware(['auth', CobradorMiddleware::class])->group(function(){
+Route::middleware(['auth', CobradorMiddleware::class])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/ubicaciones', [RutaController::class, 'index_view'])->name('ruta.index');
 
     //prox feat: get imagenes privadas
     Route::get('/imagenes/{clienteId}', [GetClienteImageController::class, 'mostrar'])->name('get.imagen');
-    
+
     //apis    
     Route::post('/api/cliente', [ClienteController::class, 'store'])->name('cliente.store');
     Route::get('/api/cliente', [ClienteController::class, 'index']);
@@ -40,11 +40,7 @@ Route::middleware(['auth', CobradorMiddleware::class])->group(function(){
     Route::get('/api/ruta', [RutaController::class, 'index']);
 
     Route::get('/api/ganancias', [PagoController::class, 'ganancias']);
-    
 });
 
 
-Route::get('/debug', function () {
-
-    
-});
+Route::get('/debug', function () {});
