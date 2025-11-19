@@ -44,7 +44,7 @@ class PrestamoController extends Controller
             $data['saldo_pendiente'] = $data['monto_total'];
             $data['estado'] = 'activo';
             $data['codigo'] = set_code();
-            $data['cobrador_id'] = auth()->user()->id;            
+            $data['cobrador_id'] = auth()->user()->id;
             $prestamo = Prestamo::create($data);
             $res = $this->prestamoService->process_pagos($prestamo, $data['fechas']);
             if (!is_array($res)) {
