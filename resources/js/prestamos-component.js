@@ -83,9 +83,6 @@ function cerrarModal() {
 }
 
 if ($('#modal-gestion-pago')) {
-    abrirModal();
-}
-function abrirModal() {
     $('#modal-gestion-pago').addEventListener('click', e => {
         if (e.target == $("#modal-gestion-pago")) {
             const gestionPago = $('#modal-gestion-pago');
@@ -103,15 +100,15 @@ function abrirModal() {
             }, { once: true });
         }
     })
+}
 
+if ($('#form-gestion-pago')) {
     $el('#form-gestion-pago', 'submit', async e => {
         e.preventDefault();
         const codigo = $("#pago-codigo").dataset.code;
         const monto = $("input[id='monto-pago-pago']").value;
         const estado = $("#estado-pago").value;
         const observaciones = $("textarea[id='observaciones-pago']").value;
-
-        console.log(monto, estado, observaciones)
 
         const data = new FormData();
         data.append('monto_pagado', monto);
@@ -124,22 +121,21 @@ function abrirModal() {
 
         try {
             const res = await axios.post(`api/pago/${codigo}`, data);
+            console.log('si')
             showToast('Pago realizado');
             $('#modal-gestion-pago').classList.add('hidden');
             await renderPrestamos();
             renderGanancias();
         } catch (err) {
-            console.log(er)
+            console.log(err)
         }
     })
 }
 
-// await renderPrestamos();
 
 export async function renderPrestamos() {
     try {
         const res = await axios.get('/api/prestamo');
-        console.log(res)
         const data = res.data.data;
         const container = $('#prestamos-container');
         container.innerHTML = '';
@@ -150,15 +146,12 @@ export async function renderPrestamos() {
             let opciones = `<option value="" selected disabled>Ver Pagos</option>`;
 
             prestamo.pagos.forEach(pago => {
-                const fecha = formatFecha(pago.vencimiento);      // tu función JS
-                const estado = setEstadoPago(pago.estado);       // tu función JS
+                const fecha = formatFecha(pago.vencimiento);
+                const estado = setEstadoPago(pago.estado);
                 opciones += `<option value="${pago.id}" disabled>${fecha} ● ${estado}</option>`;
             });
 
-
-            const estado = prestamo.proximo_pago.estado; // por ejemplo: "pendiente"
-
-            // Definimos las clases según el estado
+            const estado = prestamo.proximo_pago.estado;
             const clases = {
                 pendiente: 'bg-yellow-200 text-yellow-700',
                 parcial: 'bg-orange-300 text-orange-700',
@@ -166,7 +159,6 @@ export async function renderPrestamos() {
                 pagado: 'bg-green-200 text-green-700'
             };
 
-            // Construimos el HTML del span
             const span = `
     <span id="prueba" class="text-xs px-2 py-1 rounded font-semibold ${clases[estado] || ''}">
         ${estado.charAt(0).toUpperCase() + estado.slice(1)} <!-- opcional -->
@@ -233,7 +225,7 @@ export async function renderPrestamos() {
             container.appendChild(div)
         })
         gestionPago();
-        abrirModal();
+        // abrirModal();
         cerrarModal();
     } catch (err) {
         console.log(err)
@@ -248,7 +240,7 @@ export async function renderGanancias() {
     try {
         const res = await axios.get('api/ganancias');
         const data = res.data;
-        console.log(data)
+        // console.log(data)
 
         cobrado.innerText = `Gs. ${data.cobrado.toLocaleString('es-PY')}`;
         montoCobrar.innerText = `de Gs. ${data.montoCobrar.toLocaleString('es-PY')}`
