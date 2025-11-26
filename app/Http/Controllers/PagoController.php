@@ -13,7 +13,7 @@ class PagoController extends Controller
     public function show(string $id)
     {
         try {
-            $pago = Pago::with('cliente', 'prestamo', 'cliente')->where('cobrador_id', auth()->user()->id)->findOrFail($id);
+            $pago = Pago::with('cliente', 'prestamo')->where('cobrador_id', auth()->user()->id)->findOrFail($id);
             return response()->json([
                 'data' => $pago
             ]);

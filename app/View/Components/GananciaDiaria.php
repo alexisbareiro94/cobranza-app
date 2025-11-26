@@ -23,7 +23,9 @@ class GananciaDiaria extends Component
         $pagos = Pago::whereBetween('fecha_pago', [now()->startOfDay(), now()->endOfDay()])
             ->where('cobrador_id', auth()->id())
             ->get();
-        $aCobrar = Pago::where('vencimiento', '<=', now()->endOfDay())->get();
+        $aCobrar = Pago::where('vencimiento',  now()->format('Y-m-d'))
+            ->where('cobrador_id', auth()->id())
+            ->get();
 
         $this->cobrado = $pagos->sum('monto_pagado');
         $this->pagosCompletados = $pagos->unique('prestamo_id')->count();

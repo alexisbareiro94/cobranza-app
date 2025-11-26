@@ -106,3 +106,8 @@ function auth_role()
 {
     return auth()->user()->role;
 }
+
+function auth_id()
+{
+    return auth()->user()->id;
+}
