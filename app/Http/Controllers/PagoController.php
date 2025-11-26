@@ -63,12 +63,14 @@ class PagoController extends Controller
             $pagos = Pago::whereBetween('fecha_pago', [now()->startOfDay(), now()->endOfDay()])
                 ->where('cobrador_id', auth()->id())
                 ->get();
-            $aCobrar = Pago::where('vencimiento', '<=', now()->endOfDay())->get();
+            $aCobrar = Pago::where('vencimiento', '<=', now()->format('Y-m-d'))
+                ->where('cobrador_id', auth()->id())
+                ->get();
 
             $cobrado = $pagos->sum('monto_pagado');
             $pagosCompletados = $pagos->unique('prestamo_id')->count();
-            $montoCobrar = $aCobrar->sum('monto_esperado');
-            $cantidadPagos = $aCobrar->unique('prestamo_id')->count();
+            $montoCobrar = $aCobrar->where('fecha_pago', now()->format('Y-m-d'))->sum('monto_esperado');
+            $cantidadPagos = $aCobrar->where('fecha_pago', now()->format('Y-m-d'))->unique('prestamo_id')->count();
 
             return response()->json([
                 'cobrado' => $cobrado,
