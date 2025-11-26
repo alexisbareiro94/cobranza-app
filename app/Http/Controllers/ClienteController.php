@@ -20,7 +20,7 @@ class ClienteController extends Controller
             }
             $data['cobrador_id'] = auth()->user()->id;
             Cliente::create($data);
-            
+
             return response()->json([
                 'message' => 'Cliente Agregado',
             ]);
@@ -31,13 +31,14 @@ class ClienteController extends Controller
         }
     }
 
-    public function index(Request $request){
-        try{
+    public function index(Request $request)
+    {
+        try {
             $q = $request->query('q');
             $query = Cliente::query()
                 ->where('cobrador_id', auth()->user()->id);
 
-            if(filled($q)){
+            if (filled($q)) {
                 $query->whereLike('nombre', "%$q%")
                     ->orWhereLike("nro_ci", "%$q%")
                     ->orWhereLike('telefono', "%$q%");
@@ -49,20 +50,33 @@ class ClienteController extends Controller
                 'data' => $clientes,
                 'cobrador_id' => auth()->user()->id,
             ]);
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return response()->json([
                 'error' => $e->getMessage(),
             ]);
         }
     }
 
-    public function show(string $id){
-        try{
+    public function show_view(string $id)
+    {
+        try {
+            $cliente = Cliente::findOrFail($id);
+            return view('clientes.ver', [
+                'cliente' => $cliente,
+            ]);
+        } catch (\Exception $e) {
+            return redirect()->route('dashboard')->with('error', 'Cliente no encontrado');
+        }
+    }
+
+    public function show(string $id)
+    {
+        try {
             $user = Cliente::findOrFail($id);
             return response()->json([
                 'data' => $user,
             ]);
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return response()->json([
                 'error' => $e->getMessage(),
             ]);

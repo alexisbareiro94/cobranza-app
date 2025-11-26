@@ -7,7 +7,7 @@
     <div class="p-4 space-y-6 md:space-y-0 md:grid md:grid-cols-3 md:gap-6">
         <!-- Resumen rápido -->
         <div class="col-span-1 space-y-3">
-           <x-ganancia-diaria />
+            <x-ganancia-diaria />
 
             <!-- Acciones rápidas -->
             <div class="mt-4">
@@ -53,13 +53,15 @@
             </div>
 
             <div class="xl2:hidden mt-6 font-semibold flex items-center justify-center">
-                <button id="abrir-todos-clientes" class="bg-gray-200 text-sm text-center px-4 py-2 rounded-md transition active:scale-90">
+                <button id="abrir-todos-clientes"
+                    class="bg-gray-200 text-sm text-center px-4 py-2 rounded-md transition active:scale-90">
                     Ver Clientes
                 </button>
-                
-                
-                <x-todos-clientes :$clientes />                
+
+
+                <x-todos-clientes :$clientes />
             </div>
+            @include('include.ver-clientes')
 
             <div id="clientes-container" class="hidden xl2:block mt-4 font-semibold">
                 <h2>Clientes</h2>
@@ -92,5 +94,5 @@
 
             <x-proximos-pagos />
         </div>
-    </div> 
+    </div>
 @endsection

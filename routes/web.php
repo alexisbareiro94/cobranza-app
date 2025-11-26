@@ -25,6 +25,7 @@ Route::middleware(['auth', CobradorMiddleware::class])->group(function () {
     Route::get('/historial', [HistorialController::class, 'index_view'])->name('historial.index');
     Route::post('/historial/exportar', [HistorialController::class, 'exportar'])->name('historial.exportar');
 
+    Route::get('/cliente/{id}', [ClienteController::class, 'show_view'])->name('cliente.show');
     //prox feat: get imagenes privadas
     Route::get('/imagenes/{clienteId}', [GetClienteImageController::class, 'mostrar'])->name('get.imagen');
 

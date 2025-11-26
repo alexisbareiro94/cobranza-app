@@ -43,6 +43,7 @@
             @include('layouts.nav-mobile')
             @include('include.add-cliente')
             @include('include.add-prestamo')
+            @stack('scripts')
         </main>
 
     </div>
