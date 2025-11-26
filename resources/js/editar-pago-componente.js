@@ -218,3 +218,25 @@ function rederTablePagos(data) {
         paginacion.classList.add('hidden');
     }
 }
+
+
+if ($('#btn-exportar')) {
+    $el('#btn-exportar', 'click', async e => {
+        e.preventDefault();
+        $('#exportarPagosModal').classList.remove('hidden');
+
+    })
+
+
+    $el('#cancelExportBtn', 'click', async e => {
+        e.preventDefault();
+        $('#exportarPagosModal').classList.add('hidden');
+    })
+
+    // $el('#confirmExportBtn', 'click', async e => {
+    //     e.preventDefault();
+    //     $('#exportarPagosModal').classList.add('hidden');
+
+    // })
+}
+

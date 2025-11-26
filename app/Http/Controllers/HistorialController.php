@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\HistorialPagoExport;
 use Illuminate\Support\Facades\DB;
 use App\Models\Historial;
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdateHistorialRequest;
 use App\Models\Pago;
 use App\Models\Cliente;
+use Illuminate\Support\Facades\Cache;
 
 class HistorialController extends Controller
 {
@@ -67,6 +70,8 @@ class HistorialController extends Controller
             } else {
                 $historial = $historial->get();
             }
+            Cache::put('historial', $historial, now()->addMinutes(2));
+
 
             return response()->json([
                 'data' => $historial,
@@ -119,6 +124,17 @@ class HistorialController extends Controller
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
+            return response()->json([
+                'error' => $e->getMessage()
+            ], 404);
+        }
+    }
+
+    public function exportar()
+    {
+        try {
+            return Excel::download(new HistorialPagoExport, 'historial-pagos.xlsx');
+        } catch (\Exception $e) {
             return response()->json([
                 'error' => $e->getMessage()
             ], 404);

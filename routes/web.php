@@ -23,6 +23,7 @@ Route::middleware(['auth', CobradorMiddleware::class])->group(function () {
     Route::get('/ubicaciones', [RutaController::class, 'index_view'])->name('ruta.index');
 
     Route::get('/historial', [HistorialController::class, 'index_view'])->name('historial.index');
+    Route::post('/historial/exportar', [HistorialController::class, 'exportar'])->name('historial.exportar');
 
     //prox feat: get imagenes privadas
     Route::get('/imagenes/{clienteId}', [GetClienteImageController::class, 'mostrar'])->name('get.imagen');
@@ -49,5 +50,9 @@ Route::middleware(['auth', CobradorMiddleware::class])->group(function () {
     Route::post('/api/historial/{id}', [HistorialController::class, 'update']);
 });
 
+use Illuminate\Support\Facades\Cache;
 
-Route::get('/debug', function () {});
+Route::get('/debug', function () {
+    Cache::forget('historial');
+    echo 'Cache eliminado';
+});
