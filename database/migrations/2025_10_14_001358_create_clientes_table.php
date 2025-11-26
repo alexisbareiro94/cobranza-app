@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('ciudad');
             $table->string('geo');
             $table->string('imagen')->nullable();
-            $table->boolean('activo')->default(true);
+            $table->boolean('activo')->default(false);
             $table->string('referencia')->nullable();
             $table->timestamps();
         });

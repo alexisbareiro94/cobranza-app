@@ -79,7 +79,7 @@ export const formatDateHora = value => {
         month: '2-digit',
         year: 'numeric',
         hour: '2-digit',
-        minute: '2-digit',        
+        minute: '2-digit',
         hour12: false,
     }).replace(',', ' -');
 }
@@ -159,6 +159,7 @@ export function verificarFecha(valor) {
 
 export const MAPBOX_TOKEN = "pk.eyJ1IjoiYWxleGlzZ2IiLCJhIjoiY203bWI0ZWNqMGloNzJrcTVzOTFhY3d5NCJ9.teEQeq-xDdyTSJtX5qGtTw";
 
+//pasar el id del modal
 export function abrirModalConAnimacion(divToAnimate) {
     const modal = $(`#${divToAnimate}`)
     if (modal.classList.contains('animate-modal-out')) {
@@ -166,6 +167,7 @@ export function abrirModalConAnimacion(divToAnimate) {
     }
 }
 
+//pasar los ids de los modales
 export function cerrarModalConAnimacion(modalPrincipal, modalToAnimate) {
     const modalUno = $(`#${modalPrincipal}`);
     const modal = $(`#${modalToAnimate}`);

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('historiales', function (Blueprint $table) {
             $table->id();
             $table->foreignId('cobrador_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('prestamo_id')->constrained('prestamos');            
+            $table->foreignId('prestamo_id')->constrained('prestamos');
             $table->foreignId('pago_id')->constrained('pagos');
             $table->integer('monto');
             $table->timestamps();

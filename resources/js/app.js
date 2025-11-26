@@ -7,3 +7,4 @@ import './prestamos-component';
 import './rutas';
 import './todos-clientes-compoent';
 import './proximos-pagos-component';
+import './editar-pago-componente';

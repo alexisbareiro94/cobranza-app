@@ -6,13 +6,14 @@ use App\Http\Requests\UpdatePagoRequest;
 use Illuminate\Http\Request;
 use App\Models\Pago;
 use App\Models\Prestamo;
+use App\Models\Historial;
 
 class PagoController extends Controller
 {
     public function show(string $id)
     {
         try {
-            $pago = Pago::with('cliente', 'prestamo')->where('cobrador_id', auth()->user()->id)->findOrFail($id);
+            $pago = Pago::with('cliente', 'prestamo', 'cliente')->where('cobrador_id', auth()->user()->id)->findOrFail($id);
             return response()->json([
                 'data' => $pago
             ]);
@@ -28,11 +29,19 @@ class PagoController extends Controller
         try {
             $data = $request->validated();
             $pago = Pago::where('codigo', $code)->where('cobrador_id', auth()->user()->id)->first();
+
             $data['fecha_pago'] = now()->format('Y-m-d');
             $prestamo = Prestamo::findOrFail($pago->prestamo_id);
             $prestamo->update([
                 'saldo_pendiente' => $prestamo->saldo_pendiente -= $data['monto_pagado'],
                 'cuotas_pagadas' => $data['estado'] == 'pagado' ? $prestamo->cuotas_pagadas += 1 : $prestamo->cuotas_pagadas,
+            ]);
+
+            Historial::create([
+                'cobrador_id' => auth()->user()->id,
+                'prestamo_id' => $pago->prestamo_id,
+                'pago_id' => $pago->id,
+                'monto' => $data['monto_pagado'],
             ]);
 
             $data['monto_pagado'] += $pago->monto_pagado;

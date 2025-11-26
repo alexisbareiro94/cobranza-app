@@ -9,7 +9,8 @@
                         <option value="" selected disabled>Ver Pagos</option>
                         @foreach ($prestamo->pagos as $pago)
                             <option value="" disabled>{{ format_fecha($pago->vencimiento) }} ●
-                                <span>{{ set_estado_pago($pago->estado) }}</option>
+                                <span>{{ set_estado_pago($pago->estado) }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
@@ -48,7 +49,7 @@
                 'text-xs px-2 py-1 rounded font-semibold',
                 'bg-yellow-200 text-yellow-700' =>
                     $prestamo->proximo_pago->estado == 'pendiente',
-                'bg-orange-300 text-orange-700' =>
+                'bg-orange-200 text-orange-700' =>
                     $prestamo->proximo_pago->estado == 'parcial',
                 'bg-red-200 text-red-700' => $prestamo->proximo_pago->estado == 'no_pagado',
                 'bg-green-200 text-green-700' =>

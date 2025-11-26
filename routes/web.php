@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GetClienteImageController;
+use App\Http\Controllers\HistorialController;
 use App\Http\Controllers\PagoController;
 use App\Http\Controllers\PrestamoController;
 use App\Http\Controllers\RutaController;
@@ -20,6 +21,8 @@ Route::middleware(['auth', CobradorMiddleware::class])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/ubicaciones', [RutaController::class, 'index_view'])->name('ruta.index');
+
+    Route::get('/historial', [HistorialController::class, 'index_view'])->name('historial.index');
 
     //prox feat: get imagenes privadas
     Route::get('/imagenes/{clienteId}', [GetClienteImageController::class, 'mostrar'])->name('get.imagen');
@@ -40,6 +43,10 @@ Route::middleware(['auth', CobradorMiddleware::class])->group(function () {
     Route::get('/api/ruta', [RutaController::class, 'index']);
 
     Route::get('/api/ganancias', [PagoController::class, 'ganancias']);
+
+    Route::get('/api/historial', [HistorialController::class, 'index']);
+    Route::get('/api/historial/{id}', [HistorialController::class, 'show']);
+    Route::post('/api/historial/{id}', [HistorialController::class, 'update']);
 });
 
 

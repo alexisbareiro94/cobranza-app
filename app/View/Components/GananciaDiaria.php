@@ -24,13 +24,14 @@ class GananciaDiaria extends Component
             ->where('cobrador_id', auth()->id())
             ->get();
         $aCobrar = Pago::where('vencimiento', '<=', now()->endOfDay())->get();
-        
-        
 
         $this->cobrado = $pagos->sum('monto_pagado');
-        $this->pagosCompletados = $pagos->unique('prestamo_id')->count();     
+        $this->pagosCompletados = $pagos->unique('prestamo_id')->count();
         $this->montoCobrar = $aCobrar->sum('monto_esperado');
-        $this->cantidadPagos = $aCobrar->unique('prestamo_id')->count();             
+        $this->cantidadPagos = $aCobrar->unique('prestamo_id')->count();
+
+
+        // dd($pagos, $aCobrar, $this->cobrado, $this->pagosCompletados, $this->montoCobrar, $this->cantidadPagos);
     }
 
     /**

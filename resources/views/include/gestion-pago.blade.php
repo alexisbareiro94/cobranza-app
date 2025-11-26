@@ -48,7 +48,8 @@
 
                     <div id="pago-parcial" class="hidden bg-orange-100  rounded-lg p-3 mt-2">
                         <p class="text-orange-400 text-sm">
-                            Se realizó un pago parcial de: <span id="monto-parcial" class="font-medium text-orange-500">Gs. 50.000</span>.
+                            Se realizó un pago parcial de: <span id="monto-parcial"
+                                class="font-medium text-orange-500">Gs. 50.000</span>.
                         </p>
                         <p id="fecha-pago" class="text-gray-500 text-xs mt-1">16-10-25 / 08:45</p>
                     </div>

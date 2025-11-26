@@ -15,11 +15,11 @@ class Historial extends Model
         'monto',
     ];
 
-    public function pagos()
+    public function pago()
     {
         return $this->belongsTo(Pago::class);
     }
-    
+
     public function prestamo()
     {
         return $this->belongsTo(Prestamo::class);
