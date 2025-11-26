@@ -14,7 +14,7 @@
             <span>Inicio</span>
         </a>
         <a href="{{ route('historial.index') }}"
-            class="flex items-center space-x-2 animation-all hover:bg-green-700 p-2 rounded">
+            class="flex items-center {{ request()->routeIs('historial.index') ? 'text-green-700 bg-green-200' : '' }} space-x-2 animation-all hover:bg-green-400 p-2 rounded">
             <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                 fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -22,14 +22,14 @@
             </svg>
             <span>Historial</span>
         </a>
-        <a href="" class="flex items-center space-x-2 animation-all hover:bg-green-700 p-2 rounded">
+        {{-- <a href="" class="flex items-center space-x-2 animation-all hover:bg-green-700 p-2 rounded">
             <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                 fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M4 4v15a1 1 0 0 0 1 1h15M8 16l2.5-5.5 3 3L17.273 7 20 9.667" />
             </svg>
             <span>Reportes</span>
-        </a>
+        </a> --}}
         <a href="#" class="flex items-center space-x-2 animation-all hover:bg-green-700 p-2 rounded">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="size-5">
