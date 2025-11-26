@@ -3,7 +3,6 @@
 @section('title', 'Historial')
 
 @section('content')
-
     <div id="historial-container" class=" fade-in">
         <div class="bg-white rounded-lg shadow p-4 mb-6">
             <div class="flex justify-between items-center mb-4">
@@ -16,15 +15,22 @@
             <!-- Filtros -->
             <div class="mb-4 flex flex-wrap gap-3">
                 <select id="filtro-estado" class="text-sm px-3 py-2 border border-gray-300 rounded-md">
-                    <option value="todos">Todos los estados</option>
+                    <option value="">Todos los estados</option>
                     <option value="pagado">Pagado</option>
                     <option value="pendiente">Pendiente</option>
                     <option value="parcial">Parcial</option>
                     <option value="no_pagado">No Pagado</option>
                 </select>
 
+                <select id="filtro-clientes" class="text-sm px-3 py-2 border border-gray-300 rounded-md">
+                    <option value="">Todos los clientes</option>
+                    @foreach ($clientes as $cliente)
+                        <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
+                    @endforeach
+                </select>
+
                 <select id="filtro-mes" class="text-sm px-3 py-2 border border-gray-300 rounded-md">
-                    <option value="todos">Todos los meses</option>
+                    <option value="">Todos los meses</option>
                     <option value="1">Enero</option>
                     <option value="2">Febrero</option>
                     <option value="3">Marzo</option>
@@ -53,34 +59,15 @@
                 </button>
             </div>
 
-            <!-- Resumen de pagos -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
-                <div class="bg-blue-50 p-3 rounded-lg border border-blue-200">
-                    <p class="text-sm text-blue-700">Total Pagado</p>
-                    <p class="text-lg font-bold text-blue-800">Gs. 2.450.000</p>
-                </div>
-                <div class="bg-green-50 p-3 rounded-lg border border-green-200">
-                    <p class="text-sm text-green-700">Pagos Completos</p>
-                    <p class="text-lg font-bold text-green-800">8</p>
-                </div>
-                <div class="bg-yellow-50 p-3 rounded-lg border border-yellow-200">
-                    <p class="text-sm text-yellow-700">Pagos Pendientes</p>
-                    <p class="text-lg font-bold text-yellow-800">2</p>
-                </div>
-                <div class="bg-red-50 p-3 rounded-lg border border-red-200">
-                    <p class="text-sm text-red-700">Pagos Atrasados</p>
-                    <p class="text-lg font-bold text-red-800">1</p>
-                </div>
-            </div>
 
             <!-- Lista de pagos -->
             <div class="overflow-x-auto bg-gray-100 mx-4">
                 <div class="px-4 py-8">
 
-                    <form class="flex items-center max-w-sm mx-auto space-x-2">
+                    <form id="form-filtrar" class="flex items-center max-w-sm mx-auto space-x-2">
                         <label for="simple-search" class="sr-only">Search</label>
                         <div class="relative w-full">
-                            <input type="text" id="simple-search"
+                            <input type="text" id="search-input"
                                 class="px-3 py-2.5 rounded-md bg-neutral-secondary-medium border border-default-medium rounded-base ps-4 text-heading text-sm focus:ring-brand focus:border-brand block w-full placeholder:text-body"
                                 placeholder="Search branch name..." required />
                         </div>
@@ -100,6 +87,7 @@
                     <thead class="bg-gray-100">
                         <tr>
                             <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Fecha de pago</th>
+                            <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Cliente</th>
                             <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Monto</th>
                             <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Estado</th>
                             <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Código</th>
@@ -110,6 +98,7 @@
                         @foreach ($historial as $item)
                             <tr>
                                 <td class="py-3 px-4 border-b text-sm">{{ format_fecha($item->created_at) }}</td>
+                                <td class="py-3 px-4 border-b text-sm">{{ $item->pago->cliente->nombre }}</td>
                                 <td class="py-3 px-4 border-b text-sm font-medium">Gs. {{ format_monto($item->monto) }}</td>
                                 <td class="py-3 px-4 border-b">
                                     <span id="prueba" @class([
@@ -143,9 +132,10 @@
                     </tbody>
                 </table>
             </div>
-            {{ $historial->links() }}
+            <div id="paginacion-pagos" class="">
+                {{ $historial->links() }}
+            </div>
         </div>
     </div>
     <x-editar-pago />
-
 @endsection
