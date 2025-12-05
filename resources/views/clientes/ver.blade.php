@@ -73,9 +73,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                                d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Zm6-10.125a1.875 1.875 0 1 1-3.75 0 1.875 1.875 0 0 1 3.75 0Zm1.294 6.336a6.721 6.721 0 0 1-3.17.789 6.721 6.721 0 0 1-3.168-.789 3.376 3.376 0 0 1 6.338 0Z" />
                         </svg>
 
                         <h3 class="text-xl font-bold text-gray-800">
@@ -133,7 +131,15 @@
                 </div>
 
                 <!-- Mapa de Ubicación -->
-                <h3 class="text-xl font-bold text-gray-800 mb-4">🗺️ Ubicación en el Mapa</h3>
+                <div class="flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                    </svg>
+                    <h3 class="text-xl font-bold text-gray-800">Ubicación en el Mapa</h3>
+                </div>
                 <div class="bg-white shadow-md rounded-xl p-5">
                     <div id="map" class="w-full h-64 rounded-lg" style="min-height: 300px;"></div>
                 </div>
@@ -143,8 +149,16 @@
             <div class="lg:col-span-2 space-y-6">
 
                 <!-- Resumen -->
+                <div class="flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+
+                    <h3 class="text-xl font-bold text-gray-800">Resumen de Préstamos</h3>
+                </div>
                 <div class="bg-white shadow-md rounded-xl p-5">
-                    <h3 class="text-xl font-bold text-gray-800 mb-4">💰 Resumen de Préstamos</h3>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <div class="bg-blue-50 p-3 rounded-lg">
                             <p class="text-sm text-blue-600">Total Préstamos</p>
@@ -169,8 +183,15 @@
                 </div>
 
                 <!-- Préstamos Activos -->
+                <div class="flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
+                    </svg>
+                    <h3 class="text-xl font-bold text-gray-800">Préstamos</h3>
+                </div>
                 <div class="bg-white shadow-md rounded-xl p-5">
-                    <h3 class="text-xl font-bold text-gray-800 mb-4">📊 Préstamos</h3>
 
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200">
@@ -208,8 +229,16 @@
                 </div>
 
                 <!-- Próximos Pagos -->
+                <div class="flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
+                    </svg>
+
+                    <h3 class="text-xl font-bold text-gray-800 ">Próximo Pago</h3>
+                </div>
                 <div class="bg-white shadow-md rounded-xl p-5">
-                    <h3 class="text-xl font-bold text-gray-800 mb-4">📅 Próximo Pago</h3>
 
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200">
