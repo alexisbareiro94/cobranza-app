@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreClienteRequest;
 use Illuminate\Http\Request;
 use App\Models\Cliente;
+use App\Http\Requests\UpdateClienteRequest;
 
 class ClienteController extends Controller
 {
@@ -60,12 +61,15 @@ class ClienteController extends Controller
     public function show_view(string $id)
     {
         try {
-            $cliente = Cliente::findOrFail($id);
+            $cliente = Cliente::where('cobrador_id', auth()->user()->id)
+                ->with('prestamos', 'pagos')
+                ->findOrFail($id);
+
             return view('clientes.ver', [
                 'cliente' => $cliente,
             ]);
         } catch (\Exception $e) {
-            return redirect()->route('dashboard')->with('error', 'Cliente no encontrado');
+            throw new \Exception($e->getMessage());
         }
     }
 
@@ -80,6 +84,21 @@ class ClienteController extends Controller
             return response()->json([
                 'error' => $e->getMessage(),
             ]);
+        }
+    }
+
+    public function update(UpdateClienteRequest $request, string $id)
+    {
+        try {
+            $cliente = Cliente::findOrFail($id);
+            $cliente->update($request->validated());
+            return response()->json([
+                'message' => 'Cliente Actualizado',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+            ], 400);
         }
     }
 }

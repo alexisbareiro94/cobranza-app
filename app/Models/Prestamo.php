@@ -45,12 +45,13 @@ class Prestamo extends Model
             ->where(function ($q) {
                 $q->where('estado', 'no_pagado')
                     ->orWhere('estado', 'parcial')
-                    ->orWhere('estado', 'pendiente');                    
+                    ->orWhere('estado', 'pendiente');
             })
             ->orderBy('numero_cuota');
     }
 
-    public function historial(){
+    public function historial()
+    {
         return $this->hasMany(Historial::class, 'prestamo_id');
     }
 }

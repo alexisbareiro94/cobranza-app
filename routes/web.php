@@ -33,6 +33,8 @@ Route::middleware(['auth', CobradorMiddleware::class])->group(function () {
     Route::post('/api/cliente', [ClienteController::class, 'store'])->name('cliente.store');
     Route::get('/api/cliente', [ClienteController::class, 'index']);
     Route::get('/api/cliente/{id}', [ClienteController::class, 'show']);
+    Route::put('/api/cliente/{id}', [ClienteController::class, 'update']);
+
 
     Route::post('/api/prestamo', [PrestamoController::class, 'store']);
     Route::get('/api/prestamo', [PrestamoController::class, 'index']);

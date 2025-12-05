@@ -34,6 +34,6 @@ class Cliente extends Model
 
     public function pagos()
     {
-        return $this->hasMany(Pago::class, 'cliente_id');
+        return $this->hasManyThrough(Pago::class, Prestamo::class, 'cliente_id', 'prestamo_id');
     }
 }

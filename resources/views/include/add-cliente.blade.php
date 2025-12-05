@@ -67,28 +67,29 @@
 
                     <div>
                         <label for="ciudad" class="block mb-1 text-sm font-medium text-gray-800">Ciudad</label>
-                        <select name="ciudad" id="ciudad" class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none bg-gray-50">
+                        <select name="ciudad" id="ciudad"
+                            class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none bg-gray-50">
                             <option value="" disabled selected>-Seleccionar-</option>
                             <option value="20">Asuncion</option>
                             <option value="1">Areguá</option>
                             <option value="2">Capiatá</option>
                             <option value="3">Fernando de la Mora</option>
-                            <option value="4">Guarambaré</option>                                                                                
+                            <option value="4">Guarambaré</option>
                             <option value="5">Itá</option>
                             <option value="6">Itauguá</option>
-                            <option value="7">Julián Augusto Saldívar</option>                            
-                            <option value="8">Lambaré</option>                            
-                            <option value="9">Limpio</option>                            
-                            <option value="10">Luque</option>                            
-                            <option value="11">Mariano Roque Alonso</option>                            
-                            <option value="12">Ñemby</option>                            
-                            <option value="13">Nueva Italia</option>                            
-                            <option value="14">San Antonio</option>                            
-                            <option value="15">San Lorenzo</option>                            
-                            <option value="16">Villa Elisa</option>                            
-                            <option value="17">Villeta</option>                            
+                            <option value="7">Julián Augusto Saldívar</option>
+                            <option value="8">Lambaré</option>
+                            <option value="9">Limpio</option>
+                            <option value="10">Luque</option>
+                            <option value="11">Mariano Roque Alonso</option>
+                            <option value="12">Ñemby</option>
+                            <option value="13">Nueva Italia</option>
+                            <option value="14">San Antonio</option>
+                            <option value="15">San Lorenzo</option>
+                            <option value="16">Villa Elisa</option>
+                            <option value="17">Villeta</option>
                             <option value="18">Ypacaraí</option>
-                            <option value="19">Ypané</option>                            
+                            <option value="19">Ypané</option>
                         </select>
                     </div>
 

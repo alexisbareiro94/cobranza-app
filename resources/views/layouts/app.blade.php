@@ -22,11 +22,9 @@
             @apply bg-green-100 text-green-800;
         }
     </style>
+    @stack('styles')
     <title>
         @yield('title')
-
-
-
     </title>
 </head>
 
