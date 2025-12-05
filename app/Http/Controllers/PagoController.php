@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Pago;
 use App\Models\Prestamo;
 use App\Models\Historial;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PagoController extends Controller
 {
@@ -36,6 +37,12 @@ class PagoController extends Controller
                 'saldo_pendiente' => $prestamo->saldo_pendiente -= $data['monto_pagado'],
                 'cuotas_pagadas' => $data['estado'] == 'pagado' ? $prestamo->cuotas_pagadas += 1 : $prestamo->cuotas_pagadas,
             ]);
+
+            if ($prestamo->saldo_pendiente <= 0) {
+                $prestamo->update([
+                    'estado' => 'completado',
+                ]);
+            }
 
             Historial::create([
                 'cobrador_id' => auth()->user()->id,
@@ -68,8 +75,8 @@ class PagoController extends Controller
                 ->get();
             $cobrado = $pagos->sum('monto_pagado');
             $pagosCompletados = $pagos->unique('prestamo_id')->count();
-            $montoCobrar = $aCobrar->where('fecha_pago', '==', now()->format('Y-m-d'))->sum('monto_esperado');
-            $cantidadPagos = $aCobrar->unique('prestamo_id')->count();
+            $montoCobrar = $aCobrar->where('vencimiento', now()->format('Y-m-d'))->sum('monto_esperado');
+            $cantidadPagos = $aCobrar->where('vencimiento', now()->format('Y-m-d'))->unique('prestamo_id')->count();
 
             return response()->json([
                 'cobrado' => $cobrado,
@@ -82,6 +89,62 @@ class PagoController extends Controller
             return response()->json([
                 'error' => $e->getMessage(),
             ]);
+        }
+    }
+
+    public function pdf($id)
+    {
+        try {
+            $pago = Pago::with('cliente', 'prestamo')
+                ->where('cobrador_id', auth()->user()->id)
+                ->findOrFail($id);
+
+            $pdf = Pdf::loadView('pdf.recibo', [
+                'pago' => $pago,
+            ]);
+
+            $ruta = public_path('recibos/recibo-' . $pago->codigo . '.pdf');
+
+            // Crear la carpeta si no existe
+            if (!file_exists(public_path('recibos'))) {
+                mkdir(public_path('recibos'), 0777, true);
+            }
+
+            // Guardar el archivo
+            file_put_contents($ruta, $pdf->output());
+
+            // (Opcional) descargarlo
+            return response()->download($ruta);
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    public function whatsapp($id)
+    {
+        try {
+            $pago = Pago::with('cliente', 'prestamo')
+                ->where('cobrador_id', auth()->user()->id)
+                ->findOrFail($id);
+
+            $pdf = Pdf::loadView('pdf.recibo', [
+                'pago' => $pago,
+            ]);
+
+            $ruta = public_path('recibos/recibo-' . $pago->codigo . '.pdf');
+
+            // Crear la carpeta si no existe
+            if (!file_exists(public_path('recibos'))) {
+                mkdir(public_path('recibos'), 0777, true);
+            }
+
+            // Guardar el archivo
+            file_put_contents($ruta, $pdf->output());
+
+            // (Opcional) descargarlo
+            return response()->download($ruta);
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
         }
     }
 }

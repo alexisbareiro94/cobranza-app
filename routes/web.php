@@ -51,7 +51,12 @@ Route::middleware(['auth', CobradorMiddleware::class])->group(function () {
     Route::get('/api/historial', [HistorialController::class, 'index']);
     Route::get('/api/historial/{id}', [HistorialController::class, 'show']);
     Route::post('/api/historial/{id}', [HistorialController::class, 'update']);
+
+    Route::get('/pdf/{id}', [PagoController::class, 'pdf'])->name('pdf');
 });
+
+
+Route::get('/whatsapp/{id}', [PagoController::class, 'whatsapp'])->name('whatsapp');
 
 use Illuminate\Support\Facades\Cache;
 

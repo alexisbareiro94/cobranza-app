@@ -28,8 +28,8 @@ class GananciaDiaria extends Component
             ->get();
         $this->cobrado = $pagos->sum('monto_pagado');
         $this->pagosCompletados = $pagos->unique('prestamo_id')->count();
-        $this->montoCobrar = $aCobrar->where('fecha_pago', '==', now()->format('Y-m-d'))->sum('monto_esperado');
-        $this->cantidadPagos = $aCobrar->unique('prestamo_id')->count();
+        $this->montoCobrar = $aCobrar->where('vencimiento', now()->format('Y-m-d'))->sum('monto_esperado');
+        $this->cantidadPagos = $aCobrar->where('vencimiento', now()->format('Y-m-d'))->unique('prestamo_id')->count();
 
 
         // dd([

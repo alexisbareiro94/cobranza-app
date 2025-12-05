@@ -240,3 +240,61 @@ if ($('#btn-exportar')) {
     // })
 }
 
+const btnsRecibos = $$('.ver-recibo');
+btnsRecibos.forEach(btn => {
+    btn.addEventListener('click', async e => {
+        e.preventDefault();
+        $('#modal-recibo').classList.remove('hidden');
+        const id = btn.dataset.id;
+        const fecha = $('#fecha-recibo');
+        const recibidoDe = $('#recibido-de');
+        const recibidoDeEmail = $('#recibido-de-email');
+        const concepto = $('#concepto-recibo');
+        const monto = $('#monto-recibo');
+        const descargaPdf = $('#descargar-pdf');
+        const enviarWhatsApp = $('#enviar-whatsapp');
+
+        abrirModalConAnimacion($('#recibo-animate').id);
+
+        enviarWhatsApp.dataset.id = id;
+
+        try {
+            const res = await axios.get(`api/pago/${id}`);
+            const data = res.data.data;
+            console.log(data);
+            fecha.textContent = data.fecha_pago;
+            recibidoDe.textContent = data.cliente.nombre;
+            recibidoDeEmail.textContent = data.cliente.correo;
+            concepto.textContent = `Pago de cuota ${data.numero_cuota} de ${data.prestamo.cantidad_cuotas}`;
+            monto.textContent = `${data.monto_pagado.toLocaleString('es-PY', { style: 'currency', currency: 'PYG' })}`;
+            descargaPdf.href = `pdf/${id}`;
+
+            // enviarWhatsApp.href = `pago/pdf/${data.id}`;
+        } catch (error) {
+            console.log(error);
+        }
+    })
+})
+if ($('#cerrar-recibo')) {
+    $el('#cerrar-recibo', 'click', e => {
+        cerrarModalConAnimacion($('#modal-recibo').id, $('#recibo-animate').id);
+    })
+}
+
+if ($('#enviar-whatsapp')) {
+    $el('#enviar-whatsapp', 'click', async e => {
+        e.preventDefault();
+        const id = e.target.dataset.id;
+        try {
+            const res = await axios.get(`api/pago/${id}`);
+            const data = res.data.data;
+            console.log(data);
+            const numero = data.cliente.telefono;
+            const urlPDF = `127.0.0.1:8000/whatsapp/${id}`;
+            const mensaje = encodeURIComponent("Hola, aquí está tu comprobante de pago. Por favor, haz clic en el siguiente enlace para descargarlo:\n" + urlPDF);
+            window.open(`https://wa.me/595${numero}?text=${mensaje}`, "_blank");
+        } catch (error) {
+            console.log(error);
+        }
+    })
+}
