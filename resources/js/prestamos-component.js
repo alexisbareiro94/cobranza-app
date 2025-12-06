@@ -12,7 +12,7 @@ const getPago = async id => {
     }
 }
 
-function gestionPago() {
+export function gestionPago() {
     const btns = $$('.gestionar-pago');
     btns.forEach(btn => {
         btn.addEventListener('click', async e => {
@@ -220,8 +220,7 @@ export async function renderPrestamos() {
                         </div>
                     </div>    
                 </div>
-
-`
+            `
             container.appendChild(div)
         })
         gestionPago();

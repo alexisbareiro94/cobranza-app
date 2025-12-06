@@ -174,9 +174,9 @@
                             <p class="text-lg font-bold text-yellow-800">
                                 {{ $cliente->prestamos->where('estado', 'activo')->count() }}</p>
                         </div>
-                        <div class="bg-red-50 p-3 rounded-lg">
-                            <p class="text-sm text-red-600">Finalizados</p>
-                            <p class="text-lg font-bold text-red-800">
+                        <div class="bg-gray-100 p-3 rounded-lg">
+                            <p class="text-sm text-gray-600">Finalizados</p>
+                            <p class="text-lg font-bold text-gray-800">
                                 {{ $cliente->prestamos->where('estado', 'completado')->count() }}</p>
                         </div>
                     </div>
@@ -218,8 +218,14 @@
                                         <td class="px-4 py-2 text-sm text-gray-900">Gs.
                                             {{ format_monto($prestamo->saldo_pendiente ?? 1) }}</td>
                                         <td class="px-4 py-2">
-                                            <span
-                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs bg-green-100 text-green-800">Activo</span>
+                                            {{-- class=" bg-green-100 text-green-800" --}}
+                                            <span @class([
+                                                'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs',
+                                                'bg-gray-50 text-green-800' => $prestamo->estado == 'activo',
+                                                'bg-gray-100 text-gray-800' => $prestamo->estado == 'completado',
+                                            ])>
+                                                {{ $prestamo->estado }}
+                                            </span>
                                         </td>
                                     @endforeach
                                 </tr>

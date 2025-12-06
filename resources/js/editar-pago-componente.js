@@ -1,63 +1,67 @@
 import axios from "axios";
 import { $, $$, $el, abrirModalConAnimacion, cerrarModalConAnimacion, formatDate, csrfToken, showToast, setEstadoPago } from "./utils";
 
-const btns = $$('.editar-pago');
-const modal = $('#modal-editar-pago');
+modalEditarPago();
 
-btns.forEach(btn => {
-    btn.addEventListener('click', async () => {
-        modal.classList.remove('hidden');
-        abrirModalConAnimacion($('#pagos-animate').id);
+function modalEditarPago() {
+    const btns = $$('.editar-pago');
+    const modal = $('#modal-editar-pago');
 
-        const id = btn.dataset.id;
-        const res = await getDatosPago(id);
-        const data = res.data;
-        const editarPagoCodigo = $('#editar-pago-codigo');
-        const editarPagoCuota = $('#editar-pago-cuota');
-        const editarPagoVencimiento = $('#editar-pago-vencimiento');
-        const editarPagoMontoEsperado = $('#editar-pago-monto-esperado');
-        const editarPagoMontoPagado = $('#editar-pago-monto-pagado');
-        const editarPagoFechaPago = $('#editar-pago-fecha-pago');
-        const editarPagoEstado = $('#editar-pago-estado');
-        const editarPagoCliente = $('#editar-pago-cliente');
-        const editarPagoPrestamo = $('#editar-pago-prestamo');
-        const fechaPagoEdit = $('#fecha-pago-edit');
-        const montoPagadoEdit = $('#monto-pagado-edit');
-        const observacionesEdit = $('#observaciones-pago-edit');
-        const estadoPagoEdit = $('#estado-pago-edit');
-        const historialId = $('#historial-id');
-        const alertaPosibleError = $('#alerta-posible-error');
+    btns.forEach(btn => {
+        btn.addEventListener('click', async () => {
+            modal.classList.remove('hidden');
+            abrirModalConAnimacion($('#pagos-animate').id);
 
-        editarPagoCodigo.textContent = `#${data.pago.codigo}`;
-        editarPagoCuota.textContent = data.pago.numero_cuota;
-        editarPagoVencimiento.textContent = formatDate(data.pago.vencimiento);
-        editarPagoMontoEsperado.textContent = data.pago.monto_esperado.toLocaleString('es-PY', { style: 'currency', currency: 'PYG' });
-        editarPagoMontoPagado.textContent = data.monto.toLocaleString('es-PY', { style: 'currency', currency: 'PYG' });
-        editarPagoFechaPago.textContent = formatDate(data.pago.fecha_pago);
-        editarPagoEstado.textContent = data.pago.estado;
-        observacionesEdit.value = data.pago.observaciones;
-        montoPagadoEdit.value = data.monto;
+            const id = btn.dataset.id;
+            const res = await getDatosPago(id);
+            const data = res.data;
+            const editarPagoCodigo = $('#editar-pago-codigo');
+            const editarPagoCuota = $('#editar-pago-cuota');
+            const editarPagoVencimiento = $('#editar-pago-vencimiento');
+            const editarPagoMontoEsperado = $('#editar-pago-monto-esperado');
+            const editarPagoMontoPagado = $('#editar-pago-monto-pagado');
+            const editarPagoFechaPago = $('#editar-pago-fecha-pago');
+            const editarPagoEstado = $('#editar-pago-estado');
+            const editarPagoCliente = $('#editar-pago-cliente');
+            const editarPagoPrestamo = $('#editar-pago-prestamo');
+            const fechaPagoEdit = $('#fecha-pago-edit');
+            const montoPagadoEdit = $('#monto-pagado-edit');
+            const observacionesEdit = $('#observaciones-pago-edit');
+            const estadoPagoEdit = $('#estado-pago-edit');
+            const historialId = $('#historial-id');
+            const alertaPosibleError = $('#alerta-posible-error');
 
-        editarPagoCliente.textContent = data.pago.cliente.nombre;
-        editarPagoPrestamo.textContent = data.prestamo.codigo;
-        historialId.value = data.id;
+            editarPagoCodigo.textContent = `#${data.pago.codigo}`;
+            editarPagoCuota.textContent = data.pago.numero_cuota;
+            editarPagoVencimiento.textContent = formatDate(data.pago.vencimiento);
+            editarPagoMontoEsperado.textContent = data.pago.monto_esperado.toLocaleString('es-PY', { style: 'currency', currency: 'PYG' });
+            editarPagoMontoPagado.textContent = data.monto.toLocaleString('es-PY', { style: 'currency', currency: 'PYG' });
+            editarPagoFechaPago.textContent = formatDate(data.pago.fecha_pago);
+            editarPagoEstado.textContent = data.pago.estado;
+            observacionesEdit.value = data.pago.observaciones;
+            montoPagadoEdit.value = data.monto;
 
-        fechaPagoEdit.value = data.created_at.substring(0, 10);
+            editarPagoCliente.textContent = data.pago.cliente.nombre;
+            editarPagoPrestamo.textContent = data.prestamo.codigo;
+            historialId.value = data.id;
 
-        for (let i = 0; i < estadoPagoEdit.options.length; i++) {
-            if (estadoPagoEdit.options[i].value === data.pago.estado) {
-                estadoPagoEdit.options[i].selected = true;
-                break;
+            fechaPagoEdit.value = data.created_at.substring(0, 10);
+
+            for (let i = 0; i < estadoPagoEdit.options.length; i++) {
+                if (estadoPagoEdit.options[i].value === data.pago.estado) {
+                    estadoPagoEdit.options[i].selected = true;
+                    break;
+                }
             }
-        }
 
-        if (data.pago.monto_pagado !== data.pago.monto_esperado) {
-            alertaPosibleError.classList.remove('hidden');
-        } else {
-            alertaPosibleError.classList.add('hidden');
-        }
+            if (data.pago.monto_pagado !== data.pago.monto_esperado) {
+                alertaPosibleError.classList.remove('hidden');
+            } else {
+                alertaPosibleError.classList.add('hidden');
+            }
+        });
     });
-});
+}
 
 
 const cerrarBtns = $$('.cerrar-editar-pago');
@@ -180,7 +184,6 @@ function rederTablePagos(data) {
         } else {
             estadoClass = 'text-xs px-2 py-1 rounded font-semibold text-orange-700 bg-orange-200';
         }
-
         const tr = document.createElement('tr');
         tr.innerHTML = `
                             <td class="py-3 px-4 border-b text-sm">${formatDate(pago.created_at)}</td>
@@ -194,7 +197,7 @@ function rederTablePagos(data) {
 
                                 <td class="py-3 px-4 border-b text-sm text-gray-500">#${pago.pago.codigo}</td>
                                 <td class="py-3 px-4 border-b">
-                                    <div class="flex space-x-2">
+                                     <div class="flex items-center space-x-4">
                                         <button data-id="${pago.id}"
                                             class="editar-pago text-blue-600 hover:text-blue-800 text-sm cursor-pointer transition-all active:scale-90">
                                             <i class="">
@@ -205,11 +208,24 @@ function rederTablePagos(data) {
                                                 </svg>
                                             </i>
                                         </button>
+
+                                        <button data-id="${pago.pago.id}"
+                                            class="ver-recibo cursor-pointer transition-all active:scale-90">
+                                            <svg class="w-6 h-6 text-gray-400" aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                fill="currentColor" viewBox="0 0 24 24">
+                                                <path fill-rule="evenodd"
+                                                    d="M5.617 2.076a1 1 0 0 1 1.09.217L8 3.586l1.293-1.293a1 1 0 0 1 1.414 0L12 3.586l1.293-1.293a1 1 0 0 1 1.414 0L16 3.586l1.293-1.293A1 1 0 0 1 19 3v18a1 1 0 0 1-1.707.707L16 20.414l-1.293 1.293a1 1 0 0 1-1.414 0L12 20.414l-1.293 1.293a1 1 0 0 1-1.414 0L8 20.414l-1.293 1.293A1 1 0 0 1 5 21V3a1 1 0 0 1 .617-.924ZM9 7a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2H9Zm0 4a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2H9Zm0 4a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2H9Z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </button>
                                     </div>
                                 </td>
         `
         tableBody.appendChild(tr);
     })
+    modalEditarPago();
+    recibos();
 
     const paginacion = $('#paginacion-pagos');
     if (data.paginacion) {
@@ -232,69 +248,67 @@ if ($('#btn-exportar')) {
         e.preventDefault();
         $('#exportarPagosModal').classList.add('hidden');
     })
-
-    // $el('#confirmExportBtn', 'click', async e => {
-    //     e.preventDefault();
-    //     $('#exportarPagosModal').classList.add('hidden');
-
-    // })
 }
 
-const btnsRecibos = $$('.ver-recibo');
-btnsRecibos.forEach(btn => {
-    btn.addEventListener('click', async e => {
-        e.preventDefault();
-        $('#modal-recibo').classList.remove('hidden');
-        const id = btn.dataset.id;
-        const fecha = $('#fecha-recibo');
-        const recibidoDe = $('#recibido-de');
-        const recibidoDeEmail = $('#recibido-de-email');
-        const concepto = $('#concepto-recibo');
-        const monto = $('#monto-recibo');
-        const descargaPdf = $('#descargar-pdf');
-        const enviarWhatsApp = $('#enviar-whatsapp');
+recibos();
 
-        abrirModalConAnimacion($('#recibo-animate').id);
+function recibos() {
+    const btnsRecibos = $$('.ver-recibo');
+    btnsRecibos.forEach(btn => {
+        btn.addEventListener('click', async e => {
+            e.preventDefault();
+            $('#modal-recibo').classList.remove('hidden');
+            const id = btn.dataset.id;
+            const fecha = $('#fecha-recibo');
+            const recibidoDe = $('#recibido-de');
+            const recibidoDeEmail = $('#recibido-de-email');
+            const concepto = $('#concepto-recibo');
+            const monto = $('#monto-recibo');
+            const descargaPdf = $('#descargar-pdf');
+            const enviarWhatsApp = $('#enviar-whatsapp');
 
-        enviarWhatsApp.dataset.id = id;
+            abrirModalConAnimacion($('#recibo-animate').id);
 
-        try {
-            const res = await axios.get(`api/pago/${id}`);
-            const data = res.data.data;
-            console.log(data);
-            fecha.textContent = data.fecha_pago;
-            recibidoDe.textContent = data.cliente.nombre;
-            recibidoDeEmail.textContent = data.cliente.correo;
-            concepto.textContent = `Pago de cuota ${data.numero_cuota} de ${data.prestamo.cantidad_cuotas}`;
-            monto.textContent = `${data.monto_pagado.toLocaleString('es-PY', { style: 'currency', currency: 'PYG' })}`;
-            descargaPdf.href = `pdf/${id}`;
+            enviarWhatsApp.dataset.id = id;
 
-            // enviarWhatsApp.href = `pago/pdf/${data.id}`;
-        } catch (error) {
-            console.log(error);
-        }
+            try {
+                const res = await axios.get(`api/pago/${id}`);
+                const data = res.data.data;
+                console.log(data);
+                fecha.textContent = data.fecha_pago;
+                recibidoDe.textContent = data.cliente.nombre;
+                recibidoDeEmail.textContent = data.cliente.correo;
+                concepto.textContent = `Pago de cuota ${data.numero_cuota} de ${data.prestamo.cantidad_cuotas}`;
+                monto.textContent = `${data.monto_pagado.toLocaleString('es-PY', { style: 'currency', currency: 'PYG' })}`;
+                descargaPdf.href = `pdf/${id}`;
+
+                // enviarWhatsApp.href = `pago/pdf/${data.id}`;
+            } catch (error) {
+                console.log(error);
+            }
+        })
     })
-})
-if ($('#cerrar-recibo')) {
-    $el('#cerrar-recibo', 'click', e => {
-        cerrarModalConAnimacion($('#modal-recibo').id, $('#recibo-animate').id);
-    })
-}
+    if ($('#cerrar-recibo')) {
+        $el('#cerrar-recibo', 'click', e => {
+            cerrarModalConAnimacion($('#modal-recibo').id, $('#recibo-animate').id);
+        })
+    }
 
-if ($('#enviar-whatsapp')) {
-    $el('#enviar-whatsapp', 'click', async e => {
-        e.preventDefault();
-        const id = e.target.dataset.id;
-        try {
-            const res = await axios.get(`api/pago/${id}`);
-            const data = res.data.data;
-            console.log(data);
-            const numero = data.cliente.telefono;
-            const urlPDF = `127.0.0.1:8000/whatsapp/${id}`;
-            const mensaje = encodeURIComponent("Hola, aquí está tu comprobante de pago. Por favor, haz clic en el siguiente enlace para descargarlo:\n" + urlPDF);
-            window.open(`https://wa.me/595${numero}?text=${mensaje}`, "_blank");
-        } catch (error) {
-            console.log(error);
-        }
-    })
+    if ($('#enviar-whatsapp')) {
+        $el('#enviar-whatsapp', 'click', async e => {
+            e.preventDefault();
+            const id = e.target.dataset.id;
+            try {
+                const res = await axios.get(`api/pago/${id}`);
+                const data = res.data.data;
+                console.log(data);
+                const numero = data.cliente.telefono;
+                const urlPDF = `127.0.0.1:8000/whatsapp/${id}`;
+                const mensaje = encodeURIComponent("Hola, aquí está tu comprobante de pago. Por favor, haz clic en el siguiente enlace para descargarlo:\n" + urlPDF);
+                window.open(`https://wa.me/595${numero}?text=${mensaje}`, "_blank");
+            } catch (error) {
+                console.log(error);
+            }
+        })
+    }
 }

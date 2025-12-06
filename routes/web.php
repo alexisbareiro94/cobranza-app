@@ -47,6 +47,7 @@ Route::middleware(['auth', CobradorMiddleware::class])->group(function () {
     Route::get('/api/ruta', [RutaController::class, 'index']);
 
     Route::get('/api/ganancias', [PagoController::class, 'ganancias']);
+    Route::get('/api/pagos', [PagoController::class, 'index']);
 
     Route::get('/api/historial', [HistorialController::class, 'index']);
     Route::get('/api/historial/{id}', [HistorialController::class, 'show']);

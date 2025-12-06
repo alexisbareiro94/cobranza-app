@@ -17,10 +17,9 @@ class ProximosPagos extends Component
     {
         $this->pagos = Pago::where('cobrador_id', auth()->user()->id)
             ->where('estado', 'pendiente')
-            ->with('prestamo.proximo_pago', 'cliente')            
+            ->with('cliente')
             ->orderBy('vencimiento')
-            ->get();      
-        
+            ->get();
     }
 
     /**

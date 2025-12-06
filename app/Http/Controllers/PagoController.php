@@ -11,6 +11,43 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class PagoController extends Controller
 {
+    public function index(Request $request)
+    {
+        try {
+            $search = $request->query('search');
+            $desde = $request->query('desde');
+            $hasta = $request->query('hasta');
+
+            $pagos = Pago::where('cobrador_id', auth()->user()->id)
+                ->with('cliente', 'prestamo')
+                ->where('vencimiento', '>', now()->format('Y-m-d'))
+                ->when($search, function ($query) use ($search) {
+                    $query->where(function ($q) use ($search) {
+                        $q->whereLike('codigo', "%$search%")
+                            ->orWhereHas('cliente', function ($q) use ($search) {
+                                $q->whereLike('clientes.nombre', "%$search%");
+                            });
+                    });
+                })
+                ->when($desde, function ($query) use ($desde) {
+                    $query->where('vencimiento', '>=', $desde);
+                })
+                ->when($hasta, function ($query) use ($hasta) {
+                    $query->where('vencimiento', '<=', $hasta);
+                })
+                ->where('estado', 'pendiente')
+                ->orderBy('vencimiento')
+                ->get();
+            return response()->json([
+                'data' => $pagos,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+            ], 400);
+        }
+    }
+
     public function show(string $id)
     {
         try {
@@ -34,7 +71,7 @@ class PagoController extends Controller
             $data['fecha_pago'] = now()->format('Y-m-d');
             $prestamo = Prestamo::findOrFail($pago->prestamo_id);
             $prestamo->update([
-                'saldo_pendiente' => $prestamo->saldo_pendiente -= $data['monto_pagado'],
+                'saldo_pendiente' => $prestamo->saldo_pendiente - $data['monto_pagado'],
                 'cuotas_pagadas' => $data['estado'] == 'pagado' ? $prestamo->cuotas_pagadas += 1 : $prestamo->cuotas_pagadas,
             ]);
 
