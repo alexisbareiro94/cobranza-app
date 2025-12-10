@@ -29,7 +29,7 @@ Route::middleware(['auth', CobradorMiddleware::class])->group(function () {
     //prox feat: get imagenes privadas
     Route::get('/imagenes/{clienteId}', [GetClienteImageController::class, 'mostrar'])->name('get.imagen');
 
-    //apis    
+    //apis
     Route::post('/api/cliente', [ClienteController::class, 'store'])->name('cliente.store');
     Route::get('/api/cliente', [ClienteController::class, 'index']);
     Route::get('/api/cliente/{id}', [ClienteController::class, 'show']);
