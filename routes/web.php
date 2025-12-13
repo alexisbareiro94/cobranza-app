@@ -62,6 +62,5 @@ Route::get('/whatsapp/{id}', [PagoController::class, 'whatsapp'])->name('whatsap
 use Illuminate\Support\Facades\Cache;
 
 Route::get('/debug', function () {
-    Cache::forget('historial');
-    echo 'Cache eliminado';
+    session()->forget('query_pagos');
 });

@@ -20,28 +20,16 @@ class GananciaDiaria extends Component
 
     public function __construct()
     {
-        // Pagos que fueron cobrados hoy (tienen fecha_pago = hoy)
         $pagos = Pago::where('fecha_pago', now()->format('Y-m-d'))
             ->where('cobrador_id', auth()->id())
             ->get();
-
-        // Pagos pendientes que vencen hasta hoy (incluye pendientes y no_pagados)
         $aCobrar = Pago::where('vencimiento', '<=', now()->format('Y-m-d'))
             ->where('cobrador_id', auth()->id())
-            ->whereIn('estado', ['pendiente', 'no_pagado'])
             ->get();
-
-        // Total cobrado hoy
         $this->cobrado = $pagos->sum('monto_pagado');
-
-        // Cantidad de préstamos únicos que tuvieron pagos hoy
         $this->pagosCompletados = $pagos->unique('prestamo_id')->count();
-
-        // Monto total que falta cobrar (de pagos vencidos hasta hoy)
-        $this->montoCobrar = $aCobrar->sum('monto_esperado');
-
-        // Cantidad de préstamos únicos con pagos pendientes hasta hoy
-        $this->cantidadPagos = $aCobrar->unique('prestamo_id')->count();
+        $this->montoCobrar = $aCobrar->where('vencimiento', now()->format('Y-m-d'))->sum('monto_esperado');
+        $this->cantidadPagos = $aCobrar->where('vencimiento', now()->format('Y-m-d'))->unique('prestamo_id')->count();
 
         // dd([
         //     'pagos' =>  $pagos,

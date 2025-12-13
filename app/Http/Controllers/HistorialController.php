@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UpdateHistorialRequest;
 use App\Models\Pago;
 use App\Models\Cliente;
+use App\Models\Auditoria;
 use Illuminate\Support\Facades\Cache;
 
 class HistorialController extends Controller
@@ -21,9 +22,15 @@ class HistorialController extends Controller
             ->paginate(10);
 
         $clientes = Cliente::where('cobrador_id', auth()->user()->id)->get();
+
+        $auditorias = Auditoria::with('user')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10, ['*'], 'audit_page');
+
         return view('historial.index', [
             'historial' => $historial,
-            'clientes' => $clientes
+            'clientes' => $clientes,
+            'auditorias' => $auditorias
         ]);
     }
 
@@ -35,7 +42,22 @@ class HistorialController extends Controller
             $mes = $request->query('mes') ?? null;
             $anio = $request->query('anio') ?? null;
             $search = $request->query('q') ?? null;
+            $tipo = $request->query('tipo') ?? 'pagos';
             $paginacion = false;
+
+            if ($tipo === 'auditoria') {
+                $auditorias = Auditoria::with('user')
+                    ->orderBy('created_at', 'desc')
+                    ->when($search, function ($query) use ($search) {
+                        return $query->where('accion', 'like', "%$search%")
+                            ->orWhere('modelo_afectado', 'like', "%$search%")
+                            ->orWhere('datos_nuevos', 'like', "%$search%");
+                    });
+
+                return response()->json([
+                    'data' => $auditorias->paginate(10)
+                ]);
+            }
 
             $historial = Historial::with('pago.cliente', 'prestamo')
                 ->where('cobrador_id', auth()->user()->id)
@@ -70,7 +92,7 @@ class HistorialController extends Controller
             } else {
                 $historial = $historial->get();
             }
-            Cache::put('historial', $historial, now()->addMinutes(2));
+            // Cache::put('historial', $historial, now()->addMinutes(2));
 
 
             return response()->json([
@@ -130,10 +152,17 @@ class HistorialController extends Controller
         }
     }
 
-    public function exportar()
+    public function exportar(Request $request)
     {
         try {
-            return Excel::download(new HistorialPagoExport, 'historial-pagos.xlsx');
+            $filters = [
+                'cliente_id' => $request->cliente_id,
+                'estado' => $request->estado,
+                'mes' => $request->mes,
+                'anio' => $request->anio,
+                'search' => $request->q
+            ];
+            return Excel::download(new HistorialPagoExport($filters), 'historial-pagos.xlsx');
         } catch (\Exception $e) {
             return response()->json([
                 'error' => $e->getMessage()

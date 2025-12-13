@@ -14,17 +14,45 @@ class HistorialPagoExport implements FromCollection, WithHeadings, WithMapping
      * @return \Illuminate\Support\Collection
      */
 
-    public $historial;
-    public function __construct()
-    {
-        $this->historial = Cache::get('historial') ?? Historial::with('pago.cliente', 'pago.prestamo')->get();
-        Cache::forget('historial');
-    }
+    protected $filters;
 
+    public function __construct($filters = [])
+    {
+        $this->filters = $filters;
+    }
 
     public function collection()
     {
-        return $this->historial;
+        $filters = $this->filters;
+
+        return Historial::with('pago.cliente', 'prestamo')
+            ->where('cobrador_id', auth()->user()->id)
+            ->orderBy('created_at', 'desc')
+            ->when($filters['cliente_id'] ?? null, function ($query) use ($filters) {
+                return $query->whereHas('pago.cliente', function ($query) use ($filters) {
+                    $query->where('clientes.id', $filters['cliente_id']);
+                });
+            })
+            ->when($filters['estado'] ?? null, function ($query) use ($filters) {
+                return $query->whereHas('pago', function ($query) use ($filters) {
+                    $query->where('estado', $filters['estado']);
+                });
+            })
+            ->when($filters['mes'] ?? null, function ($query) use ($filters) {
+                return $query->whereMonth('created_at', $filters['mes']);
+            })
+            ->when($filters['anio'] ?? null, function ($query) use ($filters) {
+                return $query->whereYear('created_at', $filters['anio']);
+            })
+            ->when($filters['search'] ?? null, function ($query) use ($filters) {
+                $search = $filters['search'];
+                return $query->whereHas('pago', function ($query) use ($search) {
+                    $query->where('codigo', 'like', "%$search%");
+                })->orWhereHas('pago.cliente', function ($query) use ($search) {
+                    $query->where('clientes.nombre', 'like', "%$search%");
+                });
+            })
+            ->get();
     }
 
     public function headings(): array
