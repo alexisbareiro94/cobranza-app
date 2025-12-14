@@ -48,7 +48,16 @@
                         </label>
                         <input type="number" step="0.01" id="monto_prestado" name="monto_prestado"
                             class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none bg-gray-50"
-                            placeholder="Ej. 1000.00" required>
+                            placeholder="Ej. 1000.00"
+                            @if ($configPrestamos) min="{{ $configPrestamos->monto_minimo }}"
+                                max="{{ $configPrestamos->monto_maximo }}" @endif
+                            required>
+                        @if ($configPrestamos)
+                            <p class="text-xs text-gray-500 mt-1">
+                                Rango: Gs. {{ number_format($configPrestamos->monto_minimo, 0, ',', '.') }} - Gs.
+                                {{ number_format($configPrestamos->monto_maximo, 0, ',', '.') }}
+                            </p>
+                        @endif
                     </div>
 
                     <div class="grid grid-cols-2 gap-4">
@@ -59,7 +68,8 @@
                             </label>
                             <input type="number" step="0.1" id="porcentaje_interes" name="porcentaje_interes"
                                 class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none bg-gray-50"
-                                placeholder="Ej. 10" required>
+                                placeholder="Ej. 10" value="{{ $configPrestamos->tasa_interes_default ?? '' }}"
+                                required>
                         </div>
                         <!-- Mora -->
                         <div>
@@ -68,7 +78,8 @@
                             </label>
                             <input type="number" step="0.01" id="monto_mora" name="monto_mora"
                                 class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none bg-gray-50"
-                                placeholder="Ej. 50.00" required>
+                                placeholder="Ej. 50.00" value="{{ $configPrestamos->monto_mora_default ?? '' }}"
+                                required>
                         </div>
                     </div>
 
@@ -103,7 +114,18 @@
                         </label>
                         <input type="number" id="cantidad_cuotas" name="cantidad_cuotas"
                             class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none bg-gray-50"
-                            placeholder="Ej. 12" min="1" required>
+                            placeholder="Ej. 12"
+                            @if ($configPrestamos) min="{{ $configPrestamos->cuotas_minimas }}"
+                                max="{{ $configPrestamos->cuotas_maximas }}"
+                            @else
+                                min="1" @endif
+                            required>
+                        @if ($configPrestamos)
+                            <p class="text-xs text-gray-500 mt-1">
+                                Rango: {{ $configPrestamos->cuotas_minimas }} - {{ $configPrestamos->cuotas_maximas }}
+                                cuotas
+                            </p>
+                        @endif
                     </div>
 
                     <!-- Monto por cuota -->

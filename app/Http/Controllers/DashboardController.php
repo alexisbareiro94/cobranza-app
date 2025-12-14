@@ -99,10 +99,15 @@ class DashboardController extends Controller
             ->get()
             ->take(4);
 
+        // Cargar configuración de préstamos del usuario
+        $user = auth()->user();
+        $configPrestamos = $user->configuracionPrestamos;
+
         return view('dashboard', [
             'clientes' => $clientes,
             'prestamos' => $prestamos,
             'cantidad' => $cantidad,
+            'configPrestamos' => $configPrestamos,
         ]);
     }
 }
