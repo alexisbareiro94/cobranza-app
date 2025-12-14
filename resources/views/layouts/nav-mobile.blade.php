@@ -31,15 +31,6 @@
 
         <span>Préstamos</span>
     </a>
-    {{-- <a href="#" class="text-gray-500 flex flex-col items-center text-md pt-2">
-        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-            fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M4 4v15a1 1 0 0 0 1 1h15M8 16l2.5-5.5 3 3L17.273 7 20 9.667" />
-        </svg>
-
-        <span>Reportes</span>
-    </a> --}}
     <a href="{{ route('ajustes.index') }}"
         class="{{ request()->routeIs('ajustes.index') ? 'text-green-500' : 'text-gray-500' }} flex flex-col items-center text-md pt-2">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -51,4 +42,14 @@
 
         <span>Ajustes</span>
     </a>
+
+    <!-- Logout Button -->
+    <button id="btn-logout-mobile" type="button" class="text-red-500 flex flex-col items-center text-md pt-2">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="size-5">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+        </svg>
+        <span>Salir</span>
+    </button>
 </nav>

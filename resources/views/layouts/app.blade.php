@@ -41,6 +41,7 @@
             @include('layouts.nav-mobile')
             @include('include.add-cliente')
             @include('include.add-prestamo')
+            @include('include.modal-logout')
             @stack('scripts')
         </main>
 
