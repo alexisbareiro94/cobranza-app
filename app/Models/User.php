@@ -23,6 +23,11 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'foto_perfil',
+        'telefono',
+        'nombre_negocio',
+        'direccion_oficina',
+        'horario_atencion',
     ];
 
     /**
@@ -56,5 +61,15 @@ class User extends Authenticatable
     public function clientes()
     {
         return $this->hasMany(Cliente::class, 'cobrador_id');
+    }
+
+    public function configuracionPrestamos()
+    {
+        return $this->hasOne(ConfiguracionPrestamo::class);
+    }
+
+    public function configuracionRecibos()
+    {
+        return $this->hasOne(ConfiguracionRecibo::class);
     }
 }

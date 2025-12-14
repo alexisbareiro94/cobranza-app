@@ -33,6 +33,15 @@ Route::middleware(['auth', CobradorMiddleware::class])->group(function () {
     //prox feat: get imagenes privadas
     Route::get('/imagenes/{clienteId}', [GetClienteImageController::class, 'mostrar'])->name('get.imagen');
 
+    // Ajustes
+    Route::get('/ajustes', [App\Http\Controllers\AjustesController::class, 'index'])->name('ajustes.index');
+    Route::post('/ajustes/perfil', [App\Http\Controllers\AjustesController::class, 'updateProfile'])->name('ajustes.perfil');
+    Route::post('/ajustes/password', [App\Http\Controllers\AjustesController::class, 'updatePassword'])->name('ajustes.password');
+    Route::post('/ajustes/prestamos', [App\Http\Controllers\AjustesController::class, 'updateConfigPrestamos'])->name('ajustes.prestamos');
+    Route::post('/ajustes/recibos', [App\Http\Controllers\AjustesController::class, 'updateConfigRecibos'])->name('ajustes.recibos');
+    Route::post('/ajustes/foto-perfil', [App\Http\Controllers\AjustesController::class, 'uploadFotoPerfil'])->name('ajustes.foto');
+    Route::post('/ajustes/logo', [App\Http\Controllers\AjustesController::class, 'uploadLogo'])->name('ajustes.logo');
+
     //apis
     Route::post('/api/cliente', [ClienteController::class, 'store'])->name('cliente.store');
     Route::get('/api/cliente', [ClienteController::class, 'index']);

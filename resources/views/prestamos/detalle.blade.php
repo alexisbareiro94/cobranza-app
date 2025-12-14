@@ -7,7 +7,7 @@
         <!-- Botón de regresar -->
         <div class="mb-4">
             <a href="{{ route('prestamos.index') }}"
-                class="inline-flex items-center text-green-600 hover:text-green-800 font-semibold transition-all">
+                class="p-4 inline-flex items-center text-green-600 hover:text-green-800 font-semibold transition-all">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-5 h-5 mr-2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
@@ -190,7 +190,7 @@
                 </div>
                 <div>
                     <p class="text-sm text-gray-600">CI</p>
-                    <p class="font-semibold text-gray-800">{{ $prestamo->cliente->ci ?? 'No registrado' }}</p>
+                    <p class="font-semibold text-gray-800">{{ $prestamo->cliente->nro_ci ?? 'No registrado' }}</p>
                 </div>
             </div>
         </div>

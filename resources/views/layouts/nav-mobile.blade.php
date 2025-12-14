@@ -40,7 +40,8 @@
 
         <span>Reportes</span>
     </a> --}}
-    <a href="#" class="text-gray-500 flex flex-col items-center text-md pt-2">
+    <a href="{{ route('ajustes.index') }}"
+        class="{{ request()->routeIs('ajustes.index') ? 'text-green-500' : 'text-gray-500' }} flex flex-col items-center text-md pt-2">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
             stroke="currentColor" class="size-5">
             <path stroke-linecap="round" stroke-linejoin="round"

@@ -259,11 +259,24 @@ function recibos() {
             e.preventDefault();
             $('#modal-recibo').classList.remove('hidden');
             const id = btn.dataset.id;
-            const fecha = $('#fecha-recibo');
+
+            // Obtener todos los elementos del modal
+            const codigoRecibo = $('#codigo-recibo');
+            const fechaRecibo = $('#fecha-recibo');
+            const vencimientoRecibo = $('#vencimiento-recibo');
             const recibidoDe = $('#recibido-de');
-            const recibidoDeEmail = $('#recibido-de-email');
-            const concepto = $('#concepto-recibo');
-            const monto = $('#monto-recibo');
+            const recibidoDeCi = $('#recibido-de-ci');
+            const recibidoDeTelefono = $('#recibido-de-telefono');
+            const codigoPrestamo = $('#codigo-prestamo');
+            const numeroCuota = $('#numero-cuota');
+            const estadoPago = $('#estado-pago');
+            const montoEsperado = $('#monto-esperado');
+            const montoPagado = $('#monto-pagado');
+            const saldoPendiente = $('#saldo-pendiente');
+            const saldoPendienteContainer = $('#saldo-pendiente-container');
+            const montoRecibo = $('#monto-recibo');
+            const observacionesRecibo = $('#observaciones-recibo');
+            const observacionesContainer = $('#observaciones-container');
             const descargaPdf = $('#descargar-pdf');
             const enviarWhatsApp = $('#enviar-whatsapp');
 
@@ -275,14 +288,71 @@ function recibos() {
                 const res = await axios.get(`api/pago/${id}`);
                 const data = res.data.data;
                 console.log(data);
-                fecha.textContent = data.fecha_pago;
+
+                // Información del recibo
+                codigoRecibo.textContent = `#${data.codigo}`;
+                fechaRecibo.textContent = data.fecha_pago ? formatDate(data.fecha_pago) : formatDate(new Date());
+                vencimientoRecibo.textContent = formatDate(data.vencimiento);
+
+                // Información del cliente
                 recibidoDe.textContent = data.cliente.nombre;
-                recibidoDeEmail.textContent = data.cliente.correo;
-                concepto.textContent = `Pago de cuota ${data.numero_cuota} de ${data.prestamo.cantidad_cuotas}`;
-                monto.textContent = `${data.monto_pagado.toLocaleString('es-PY', { style: 'currency', currency: 'PYG' })}`;
+                if (data.cliente.nro_ci) {
+                    recibidoDeCi.textContent = `CI: ${data.cliente.nro_ci}`;
+                    recibidoDeCi.classList.remove('hidden');
+                } else {
+                    recibidoDeCi.classList.add('hidden');
+                }
+                if (data.cliente.telefono) {
+                    recibidoDeTelefono.textContent = `Teléfono: ${data.cliente.telefono}`;
+                    recibidoDeTelefono.classList.remove('hidden');
+                } else {
+                    recibidoDeTelefono.classList.add('hidden');
+                }
+
+                // Información del préstamo
+                codigoPrestamo.textContent = `#${data.prestamo.codigo}`;
+                numeroCuota.textContent = `${data.numero_cuota} de ${data.prestamo.cantidad_cuotas}`;
+
+                // Estado del pago con colores
+                estadoPago.textContent = setEstadoPago(data.estado);
+                estadoPago.className = 'px-2 py-1 rounded text-xs font-semibold';
+                if (data.estado === 'pagado') {
+                    estadoPago.classList.add('bg-green-100', 'text-green-700');
+                } else if (data.estado === 'pendiente') {
+                    estadoPago.classList.add('bg-yellow-100', 'text-yellow-700');
+                } else if (data.estado === 'no_pagado') {
+                    estadoPago.classList.add('bg-red-100', 'text-red-700');
+                } else {
+                    estadoPago.classList.add('bg-orange-100', 'text-orange-700');
+                }
+
+                // Montos
+                montoEsperado.textContent = `Gs. ${data.monto_esperado.toLocaleString('es-PY')}`;
+                montoPagado.textContent = `Gs. ${(data.monto_pagado || 0).toLocaleString('es-PY')}`;
+
+                // Saldo pendiente (solo si hay)
+                if (data.monto_pagado && data.monto_esperado > data.monto_pagado) {
+                    const saldo = data.monto_esperado - data.monto_pagado;
+                    saldoPendiente.textContent = `Gs. ${saldo.toLocaleString('es-PY')}`;
+                    saldoPendienteContainer.classList.remove('hidden');
+                } else {
+                    saldoPendienteContainer.classList.add('hidden');
+                }
+
+                // Total
+                montoRecibo.textContent = `Gs. ${(data.monto_pagado || data.monto_esperado).toLocaleString('es-PY')}`;
+
+                // Observaciones
+                if (data.observaciones) {
+                    observacionesRecibo.textContent = data.observaciones;
+                    observacionesContainer.classList.remove('hidden');
+                } else {
+                    observacionesContainer.classList.add('hidden');
+                }
+
+                // Enlaces
                 descargaPdf.href = `pdf/${id}`;
 
-                // enviarWhatsApp.href = `pago/pdf/${data.id}`;
             } catch (error) {
                 console.log(error);
             }

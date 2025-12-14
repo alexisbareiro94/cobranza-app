@@ -141,8 +141,13 @@ class PagoController extends Controller
                 ->where('cobrador_id', auth()->user()->id)
                 ->findOrFail($id);
 
+            $user = auth()->user();
+            $configRecibo = $user->configuracionRecibos;
+
             $pdf = Pdf::loadView('pdf.recibo', [
                 'pago' => $pago,
+                'user' => $user,
+                'configRecibo' => $configRecibo,
             ]);
 
             $ruta = public_path('recibos/recibo-' . $pago->codigo . '.pdf');
@@ -169,8 +174,13 @@ class PagoController extends Controller
                 ->where('cobrador_id', auth()->user()->id)
                 ->findOrFail($id);
 
+            $user = auth()->user();
+            $configRecibo = $user->configuracionRecibos;
+
             $pdf = Pdf::loadView('pdf.recibo', [
                 'pago' => $pago,
+                'user' => $user,
+                'configRecibo' => $configRecibo,
             ]);
 
             $ruta = public_path('recibos/recibo-' . $pago->codigo . '.pdf');

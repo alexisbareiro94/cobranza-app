@@ -39,7 +39,8 @@
             </svg>
             <span>Reportes</span>
         </a> --}}
-        <a href="#" class="flex items-center space-x-2 animation-all hover:bg-green-700 p-2 rounded">
+        <a href="{{ route('ajustes.index') }}"
+            class="flex items-center {{ request()->routeIs('ajustes.index') ? 'text-green-700 bg-green-200' : '' }} space-x-2 animation-all hover:bg-green-400 p-2 rounded">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="size-5">
                 <path stroke-linecap="round" stroke-linejoin="round"

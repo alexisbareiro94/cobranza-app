@@ -1,5 +1,4 @@
-import { renderClientes } from './add-cliente';
-import { $, $el, url, formatDate, showToast, $$, formatFecha, setEstadoPago, setCiudad, verificarFecha, formatDateHora } from './utils'
+import { $, $el, formatDate, showToast, $$, formatFecha, setEstadoPago, setCiudad, verificarFecha, formatDateHora } from './utils'
 import axios from 'axios';
 
 gestionPago();
@@ -65,7 +64,7 @@ if ($('#cerrar-modal-gestion-pago')) {
     cerrarModal();
 }
 function cerrarModal() {
-    $('#cerrar-modal-gestion-pago').addEventListener('click', e => {
+    $('#cerrar-modal-gestion-pago').addEventListener('click', () => {
         const gestionPago = $('#modal-gestion-pago');
         const modal = $("#modal-in-out");
         if (modal.classList.contains('animate-modal-in')) {
@@ -83,7 +82,7 @@ function cerrarModal() {
 }
 
 if ($('#modal-gestion-pago')) {
-    $('#modal-gestion-pago').addEventListener('click', e => {
+    $('#modal-gestion-pago').addEventListener('click', () => {
         if (e.target == $("#modal-gestion-pago")) {
             const gestionPago = $('#modal-gestion-pago');
             const modal = $("#modal-in-out");
