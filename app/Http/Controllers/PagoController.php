@@ -74,8 +74,12 @@ class PagoController extends Controller
             $data['fecha_pago'] = now()->format('Y-m-d');
             $prestamo = Prestamo::findOrFail($pago->prestamo_id);
 
+            // Acumular el monto pagado (para pagos parciales)
+            $montoNuevoPago = $data['monto_pagado'];
+            $data['monto_pagado'] += $pago->monto_pagado;
+
             // Actualizar total_pagado y recalcular saldo_pendiente
-            $prestamo->total_pagado = ($prestamo->total_pagado ?? 0) + $data['monto_pagado'];
+            $prestamo->total_pagado = ($prestamo->total_pagado ?? 0) + $montoNuevoPago;
             $prestamo->saldo_pendiente = $prestamo->monto_total - $prestamo->total_pagado + ($prestamo->total_mora ?? 0);
             $prestamo->cuotas_pagadas = $data['estado'] == 'pagado' ? $prestamo->cuotas_pagadas + 1 : $prestamo->cuotas_pagadas;
 
@@ -89,11 +93,9 @@ class PagoController extends Controller
                 'cobrador_id' => auth()->user()->id,
                 'prestamo_id' => $pago->prestamo_id,
                 'pago_id' => $pago->id,
-                'monto' => $data['monto_pagado'],
+                'monto' => $montoNuevoPago,
                 'estado' => $data['estado'],
             ]);
-
-            $data['monto_pagado'] += $pago->monto_pagado;
 
             $pago->update($data);
             return response()->json([

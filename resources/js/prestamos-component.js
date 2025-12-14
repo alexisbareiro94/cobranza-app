@@ -123,6 +123,8 @@ if ($('#form-gestion-pago')) {
             console.log(res)
             showToast('Pago realizado');
             $('#modal-gestion-pago').classList.add('hidden');
+            // console.log(res.data)
+            // return;
             // await renderPrestamos();
             // renderGanancias();
             window.location.reload();
