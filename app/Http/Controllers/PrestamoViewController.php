@@ -32,9 +32,14 @@ class PrestamoViewController extends Controller
 
         $clientes = Cliente::where('cobrador_id', auth()->user()->id)->get();
 
+        // Cargar configuración de préstamos del usuario
+        $user = auth()->user();
+        $configPrestamos = $user->configuracionPrestamos;
+
         return view('prestamos.index', [
             'prestamos' => $prestamos,
-            'clientes' => $clientes
+            'clientes' => $clientes,
+            'configPrestamos' => $configPrestamos,
         ]);
     }
 

@@ -49,10 +49,10 @@
                         <input type="number" step="0.01" id="monto_prestado" name="monto_prestado"
                             class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none bg-gray-50"
                             placeholder="Ej. 1000.00"
-                            @if ($configPrestamos) min="{{ $configPrestamos->monto_minimo }}"
+                            @if (isset($configPrestamos) && $configPrestamos) min="{{ $configPrestamos->monto_minimo }}"
                                 max="{{ $configPrestamos->monto_maximo }}" @endif
                             required>
-                        @if ($configPrestamos)
+                        @if (isset($configPrestamos) && $configPrestamos)
                             <p class="text-xs text-gray-500 mt-1">
                                 Rango: Gs. {{ number_format($configPrestamos->monto_minimo, 0, ',', '.') }} - Gs.
                                 {{ number_format($configPrestamos->monto_maximo, 0, ',', '.') }}
@@ -115,12 +115,12 @@
                         <input type="number" id="cantidad_cuotas" name="cantidad_cuotas"
                             class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none bg-gray-50"
                             placeholder="Ej. 12"
-                            @if ($configPrestamos) min="{{ $configPrestamos->cuotas_minimas }}"
+                            @if (isset($configPrestamos) && $configPrestamos) min="{{ $configPrestamos->cuotas_minimas }}"
                                 max="{{ $configPrestamos->cuotas_maximas }}"
                             @else
                                 min="1" @endif
                             required>
-                        @if ($configPrestamos)
+                        @if (isset($configPrestamos) && $configPrestamos)
                             <p class="text-xs text-gray-500 mt-1">
                                 Rango: {{ $configPrestamos->cuotas_minimas }} - {{ $configPrestamos->cuotas_maximas }}
                                 cuotas
