@@ -5,10 +5,10 @@
 @section('content')
     <div id="ajustes-container" class="fade-in">
         <!-- Header -->
-        <div class="bg-white rounded-lg shadow p-6 mb-6">
-            <h2 class="text-3xl font-bold text-gray-800">⚙️ Ajustes</h2>
-            <p class="text-gray-600 mt-1">Configura tu perfil y preferencias del sistema</p>
-        </div>
+        {{-- <div class="bg-white rounded-lg shadow p-6 mb-6"> --}}
+        {{-- <h2 class="text-3xl font-bold text-gray-800">Ajustes</h2> --}}
+        {{-- <p class="text-gray-600 mt-1">Configura tu perfil y preferencias del sistema</p> --}}
+        {{-- </div> --}}
 
         <!-- Tabs Navigation -->
         <div class="bg-white rounded-lg shadow mb-6">
@@ -144,8 +144,8 @@
                                 <label for="tasa_interes_default" class="block text-sm font-medium text-gray-700 mb-2">Tasa
                                     de
                                     Interés por Defecto (%)*</label>
-                                <input type="number" id="tasa_interes_default" name="tasa_interes_default"
-                                    step="0.01" value="{{ $configPrestamos->tasa_interes_default }}" required
+                                <input type="number" id="tasa_interes_default" name="tasa_interes_default" step="0.01"
+                                    value="{{ $configPrestamos->tasa_interes_default }}" required
                                     class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent">
                             </div>
 

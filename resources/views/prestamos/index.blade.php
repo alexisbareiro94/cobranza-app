@@ -5,9 +5,9 @@
 @section('content')
     <div id="prestamos-container" class="fade-in">
         <div class="bg-white rounded-lg shadow p-4 mb-6">
-            <div class="flex justify-between items-center mb-4">
+            {{-- <div class="flex justify-between items-center mb-4">
                 <h2 class="text-2xl font-bold text-gray-800">Historial de Préstamos</h2>
-            </div>
+            </div> --}}
 
             <!-- Filtros -->
             <div class="mb-4 flex flex-wrap gap-3">
