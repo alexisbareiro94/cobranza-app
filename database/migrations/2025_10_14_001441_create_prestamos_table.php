@@ -19,6 +19,8 @@ return new class extends Migration
             $table->integer('monto_total');
             $table->integer('monto_cuota');
             $table->integer('cantidad_cuotas');
+            $table->integer('total_mora');
+            $table->integer('total_pagado');
             $table->integer('cuotas_pagadas');
             $table->integer('saldo_pendiente');
             $table->date('fecha_inicio');

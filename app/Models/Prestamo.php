@@ -28,7 +28,9 @@ class Prestamo extends Model
         'codigo',
         'monto_prestado',
         'porcentaje_interes',
-        'monto_mora'
+        'monto_mora',
+        'total_mora',
+        'total_pagado'
     ];
 
     public function cliente()

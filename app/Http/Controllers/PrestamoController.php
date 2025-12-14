@@ -52,6 +52,8 @@ class PrestamoController extends Controller
 
             $data['cuotas_pagadas'] = 0;
             $data['saldo_pendiente'] = $data['monto_total'];
+            $data['total_mora'] = 0;
+            $data['total_pagado'] = 0;
             $data['estado'] = 'activo';
             $data['codigo'] = set_code();
             $data['cobrador_id'] = auth()->user()->id;

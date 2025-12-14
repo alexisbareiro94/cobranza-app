@@ -124,8 +124,9 @@ if ($('#form-gestion-pago')) {
             console.log(res)
             showToast('Pago realizado');
             $('#modal-gestion-pago').classList.add('hidden');
-            await renderPrestamos();
-            renderGanancias();
+            // await renderPrestamos();
+            // renderGanancias();
+            window.location.reload();
         } catch (err) {
             console.log(err)
         }

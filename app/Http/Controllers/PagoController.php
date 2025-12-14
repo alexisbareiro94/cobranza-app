@@ -73,16 +73,18 @@ class PagoController extends Controller
 
             $data['fecha_pago'] = now()->format('Y-m-d');
             $prestamo = Prestamo::findOrFail($pago->prestamo_id);
-            $prestamo->update([
-                'saldo_pendiente' => $prestamo->saldo_pendiente - $data['monto_pagado'],
-                'cuotas_pagadas' => $data['estado'] == 'pagado' ? $prestamo->cuotas_pagadas += 1 : $prestamo->cuotas_pagadas,
-            ]);
+
+            // Actualizar total_pagado y recalcular saldo_pendiente
+            $prestamo->total_pagado = ($prestamo->total_pagado ?? 0) + $data['monto_pagado'];
+            $prestamo->saldo_pendiente = $prestamo->monto_total - $prestamo->total_pagado + ($prestamo->total_mora ?? 0);
+            $prestamo->cuotas_pagadas = $data['estado'] == 'pagado' ? $prestamo->cuotas_pagadas + 1 : $prestamo->cuotas_pagadas;
 
             if ($prestamo->saldo_pendiente <= 0) {
-                $prestamo->update([
-                    'estado' => 'completado',
-                ]);
+                $prestamo->estado = 'completado';
             }
+
+            $prestamo->save();
+
             Historial::create([
                 'cobrador_id' => auth()->user()->id,
                 'prestamo_id' => $pago->prestamo_id,

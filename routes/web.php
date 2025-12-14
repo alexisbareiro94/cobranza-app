@@ -7,6 +7,7 @@ use App\Http\Controllers\GetClienteImageController;
 use App\Http\Controllers\HistorialController;
 use App\Http\Controllers\PagoController;
 use App\Http\Controllers\PrestamoController;
+use App\Http\Controllers\PrestamoViewController;
 use App\Http\Controllers\RutaController;
 use App\Http\Middleware\CobradorMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,9 @@ Route::middleware(['auth', CobradorMiddleware::class])->group(function () {
 
     Route::get('/historial', [HistorialController::class, 'index_view'])->name('historial.index');
     Route::post('/historial/exportar', [HistorialController::class, 'exportar'])->name('historial.exportar');
+
+    Route::get('/prestamos', [PrestamoViewController::class, 'index'])->name('prestamos.index');
+    Route::get('/prestamos/{id}', [PrestamoViewController::class, 'show'])->name('prestamos.show');
 
     Route::get('/cliente/{id}', [ClienteController::class, 'show_view'])->name('cliente.show');
     //prox feat: get imagenes privadas
