@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('cobrador_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('prestamo_id')->constrained('prestamos');
+            $table->enum('estado', ['pagado', 'no_pagado', 'pendiente']);
             $table->foreignId('pago_id')->constrained('pagos');
             $table->integer('monto');
             $table->timestamps();

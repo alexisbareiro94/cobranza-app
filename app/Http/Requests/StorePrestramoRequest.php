@@ -24,7 +24,7 @@ class StorePrestramoRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'fechas' => explode(',',$this->fechas),
+            'fechas' => explode(',', $this->fechas),
             // 'codigo' => set_code(),
         ]);
     }
@@ -40,7 +40,10 @@ class StorePrestramoRequest extends FormRequest
             'fecha_fin_estimado' => 'required|date',
             'rango' => 'required',
             'observaciones' => 'nullable',
-            'fechas' => 'required|array',            
+            'fechas' => 'required|array',
+            'monto_prestado' => 'required|numeric|min:1',
+            'porcentaje_interes' => 'required|numeric|min:0',
+            'monto_mora' => 'required|numeric|min:0',
             // 'codigo' => 'required|unique:prestamos,codigo'
         ];
     }

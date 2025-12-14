@@ -1,4 +1,4 @@
-import { csrfToken, url, showToast, $, $$ } from './utils'
+import { csrfToken, showToast, $$ } from './utils'
 import { renderPrestamos, renderGanancias } from './prestamos-component'
 
 import axios from 'axios';
@@ -57,8 +57,42 @@ function setCantidadCuotas() {
         return;
     }
     cantidadCuotas.value = '';
-    cantidadCuotas.value = Math.round(montoTotal / montoCuota);    
+    cantidadCuotas.value = Math.round(montoTotal / montoCuota);
 }
+
+function calculateMontoCuota() {
+    const montoTotal = parseFloat(document.getElementById('monto_total').value) || 0;
+    const cantidadCuotas = parseInt(document.getElementById('cantidad_cuotas').value) || 0;
+    const montoCuotaInput = document.getElementById('monto_cuota');
+
+    if (montoTotal > 0 && cantidadCuotas > 0) {
+        const cuota = montoTotal / cantidadCuotas;
+        montoCuotaInput.value = cuota.toFixed(2);
+    }
+}
+
+function calculateMontoTotal() {
+    const montoPrestado = parseFloat(document.getElementById('monto_prestado').value) || 0;
+    const porcentajeInteres = parseFloat(document.getElementById('porcentaje_interes').value) || 0;
+    const montoTotalInput = document.getElementById('monto_total');
+
+    const interes = montoPrestado * (porcentajeInteres / 100);
+    const total = montoPrestado + interes;
+
+    montoTotalInput.value = total.toFixed(2);
+
+    // If quantity of quotas is set, recalculate quota amount, otherwise maybe calc quantity if quota amount is set?
+    // User requested "recommended value of quota amount", so we assume quantity is the driver if present.
+    if (document.getElementById('cantidad_cuotas').value) {
+        calculateMontoCuota();
+    } else if (document.getElementById('monto_cuota').value) {
+        setCantidadCuotas();
+    }
+}
+
+document.getElementById('monto_prestado').addEventListener('input', calculateMontoTotal);
+document.getElementById('porcentaje_interes').addEventListener('input', calculateMontoTotal);
+document.getElementById('cantidad_cuotas').addEventListener('input', calculateMontoCuota);
 
 document.getElementById('fecha_inicio').addEventListener('change', () => {
     setFechaFin();
@@ -88,7 +122,7 @@ function setFechaFin() {
         quincenal: 'day',
         diario: 'day',
     };
-    
+
     let fraccion;
     Object.entries(diccionario).forEach(([index, value]) => {
         if (index === rango) {
@@ -98,23 +132,21 @@ function setFechaFin() {
 
     const fechaInicio = moment(fecha);
     let fechas = [];
-    let contador = 0;
-    let fechaTemp = fechaInicio.clone();    
-    while (fechas.length < cuotas) {        
-        if (fechaTemp.day() !== 0) {            
+    let fechaTemp = fechaInicio.clone();
+    while (fechas.length < cuotas) {
+        if (fechaTemp.day() !== 0) {
             fechas.push(fechaTemp.format('YYYY-MM-DD'));
-            fechaFinEstimado.value = fechaTemp.format('YYYY-MM-DD');            
-        }else{            
+            fechaFinEstimado.value = fechaTemp.format('YYYY-MM-DD');
+        }else{
             fechas.push(fechaTemp.format('YYYY-MM-DD'));
         }
-        contador++;
         fechaTemp.add(1, fraccion);
     }
 
     sessionStorage.setItem('fechas', JSON.stringify(fechas));
 }
 
-document.getElementById('add-contrato-form').addEventListener('submit', async e => {
+document.getElementById('add-contrato-form').addEventListener('submit', e => {
     e.preventDefault();
     const clienteId = document.getElementById('cliente_id').value;
 
@@ -123,25 +155,53 @@ document.getElementById('add-contrato-form').addEventListener('submit', async e 
         return;
     }
 
+    // Populate Confirmation Modal
+    const clienteNombreTexto = document.getElementById('cliente-seleccionado-cont').innerText.trim().replace(/\s+/g, ' ');
+
+    document.getElementById('conf-monto-prestado').innerText = parseFloat(document.getElementById('monto_prestado').value).toFixed(2);
+    document.getElementById('conf-monto-total').innerText = parseFloat(document.getElementById('monto_total').value).toFixed(2);
+    document.getElementById('conf-cliente').innerText = clienteNombreTexto || 'Cliente Seleccionado';
+    document.getElementById('conf-interes').innerText = document.getElementById('porcentaje_interes').value + '%';
+    document.getElementById('conf-mora').innerText = parseFloat(document.getElementById('monto_mora').value).toFixed(2);
+    document.getElementById('conf-cuotas').innerText = document.getElementById('cantidad_cuotas').value;
+    document.getElementById('conf-monto-cuota').innerText = parseFloat(document.getElementById('monto_cuota').value).toFixed(2);
+    document.getElementById('conf-frecuencia').innerText = document.getElementById('rango').value;
+    document.getElementById('conf-fecha-fin').innerText = document.getElementById('fecha_fin_estimado').value;
+
+    document.getElementById('modal-confirmar-contrato').classList.remove('hidden');
+});
+
+document.getElementById('btn-cancelar-confirmacion').addEventListener('click', () => {
+    document.getElementById('modal-confirmar-contrato').classList.add('hidden');
+});
+
+document.getElementById('btn-confirmar-guardar').addEventListener('click', async () => {
+    const clienteId = document.getElementById('cliente_id').value;
     const fechas = JSON.parse(sessionStorage.getItem('fechas'));
     const montoTotal = document.getElementById('monto_total').value;
+    const montoPrestado = document.getElementById('monto_prestado').value;
+    const porcentajeInteres = document.getElementById('porcentaje_interes').value;
+    const montoMora = document.getElementById('monto_mora').value;
     const montoCuota = document.getElementById('monto_cuota').value;
     const cantidadCuotas = document.getElementById('cantidad_cuotas').value;
     const fechaInicio = document.getElementById('fecha_inicio').value;
     const fechaFinEstimado = document.getElementById('fecha_fin_estimado').value;
     const observaciones = document.getElementById('observaciones').value;
-    const rango = document.getElementById('rango').value
+    const rango = document.getElementById('rango').value;
 
     const formData = new FormData();
     formData.append('cliente_id', clienteId);
     formData.append('monto_total', montoTotal);
+    formData.append('monto_prestado', montoPrestado);
+    formData.append('porcentaje_interes', porcentajeInteres);
+    formData.append('monto_mora', montoMora);
     formData.append('monto_cuota', montoCuota);
     formData.append('cantidad_cuotas', cantidadCuotas);
     formData.append('fecha_inicio', fechaInicio);
     formData.append('fecha_fin_estimado', fechaFinEstimado);
     formData.append('observaciones', observaciones);
     formData.append('rango', rango);
-    formData.append('fechas', fechas);    
+    formData.append('fechas', fechas);
 
     try {
         const res = await fetch(`/api/prestamo`, {
@@ -155,23 +215,34 @@ document.getElementById('add-contrato-form').addEventListener('submit', async e 
         if (!res.ok) {
             throw data
         }
+
+
+        // Success
+        document.getElementById('modal-confirmar-contrato').classList.add('hidden');
         document.getElementById('add-contrato-form').reset();
         document.getElementById('modal-add-cargo').classList.add('hidden');
         document.getElementById('btn-buscar-cliente').innerText = 'Seleccionar Cliente'
         document.getElementById('cliente-seleccionado-cont').classList.add('hidden');
         document.getElementById('cliente_id').value = ''
-        renderCliente(clienteId);
-        renderPrestamos();        
-        renderGanancias();
-        showToast('Préstamo Registrado con éxito');        
+        // renderCliente(clienteId);
+        // renderPrestamos();
+        // renderGanancias();
+        window.location.href = '/';
+        localStorage.setItem('prestamo_registrado', true);
+        // showToast('Préstamo Registrado con éxito');
     } catch (err) {
         console.log(err)
-        // err.error.forEach(item => {
-        showToast(`${err.error}`, 'error')
-        // })
+        document.getElementById('modal-confirmar-contrato').classList.add('hidden');
+        showToast(err.error || 'Error al guardar', 'error')
     }
-})
+});
 
+document.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('prestamo_registrado')) {
+        showToast('Préstamo Registrado con éxito');
+        localStorage.removeItem('prestamo_registrado');
+    }
+});
 
 async function renderCliente(id) {
     try {
@@ -197,8 +268,8 @@ async function renderCliente(id) {
                 cont.innerHTML = `<div class="w-22 h-24 rounded-xl overflow-hidden flex-shrink-0 bg-white">
                     <!-- @if ($cliente->imagen)
                         {{-- <img src="{{ asset('storage/' . $cliente->imagen) }}" alt="{{ $cliente->nombre }}" class="w-full h-full object-cover"> --}}
-                    @else 
-                        
+                    @else
+
                     @endif -->
 
                     <div class="flex items-center justify-center w-full h-full text-gray-400">
@@ -227,7 +298,7 @@ async function renderCliente(id) {
                 <div class="ml-4 flex flex-col gap-2">
                     <a href="#" class="px-3 py-1 bg-emerald-500 text-white text-sm rounded-lg hover:bg-emerald-600">Ver</a>
                     <a href="#" class="px-3 py-1 bg-blue-500 text-white text-sm rounded-lg hover:bg-blue-600">Editar</a>
-                </div>`                
+                </div>`
             } else {
                 return;
             }

@@ -9,13 +9,13 @@ use Illuminate\Support\Facades\DB;
 
 class PrestamoService
 {
-    public function process_pagos(Prestamo $prestamo, array $fechas) 
-    {   
+    public function process_pagos(Prestamo $prestamo, array $fechas)
+    {
         DB::beginTransaction();
-        try{
+        try {
             $cont = 1;
             $pagos = [0];
-            foreach($fechas as $fecha){
+            foreach ($fechas as $fecha) {
                 $pagos[] = Pago::create([
                     'prestamo_id' => $prestamo->id,
                     'codigo' => set_code(),
@@ -31,7 +31,7 @@ class PrestamoService
             }
             DB::commit();
             return $pagos;
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
                 'error' => $e->getMessage(),

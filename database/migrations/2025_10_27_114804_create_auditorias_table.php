@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('auditorias', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('cobrador_id')->nullable()->constrained('users')->onDelete('set null');
             $table->string('accion');
             $table->string('modelo_afectado'); // stored as string e.g. 'App\Models\Pago'
             $table->unsignedBigInteger('registro_id');

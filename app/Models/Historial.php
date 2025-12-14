@@ -13,6 +13,7 @@ class Historial extends Model
         'prestamo_id',
         'pago_id',
         'monto',
+        'estado',
     ];
 
     public function pago()

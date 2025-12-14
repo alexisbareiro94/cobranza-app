@@ -9,6 +9,7 @@ class Auditoria extends Model
     protected $table = 'auditorias';
 
     protected $fillable = [
+        'cobrador_id',
         'user_id',
         'accion',
         'modelo_afectado',

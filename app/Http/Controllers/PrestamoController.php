@@ -13,7 +13,7 @@ class PrestamoController extends Controller
 {
     public function __construct(protected PrestamoService $prestamoService) {}
 
-    public function index(Request $request)
+    public function index()
     {
         try {
             $prestamos = Prestamo::with(['pagos', 'cliente', 'proximo_pago'])
@@ -40,6 +40,16 @@ class PrestamoController extends Controller
             $data = $request->validated();
             $cliente = Cliente::findOrFail($data['cliente_id']);
             $cliente->update(['activo' => true]);
+
+            // Cálculos de interés
+            $interes = $data['monto_prestado'] * ($data['porcentaje_interes'] / 100);
+            $data['monto_total'] = $data['monto_prestado'] + $interes;
+
+            // Recalcular cuota para asegurar precisión -- ELIMINADO A PEDIDO DEL USUARIO
+            // if (isset($data['cantidad_cuotas']) && $data['cantidad_cuotas'] > 0) {
+            //     $data['monto_cuota'] = round($data['monto_total'] / $data['cantidad_cuotas']);
+            // }
+
             $data['cuotas_pagadas'] = 0;
             $data['saldo_pendiente'] = $data['monto_total'];
             $data['estado'] = 'activo';

@@ -66,6 +66,9 @@ class PagoController extends Controller
     {
         try {
             $data = $request->validated();
+            // return response()->json([
+            //     'data' => $data,
+            // ]);
             $pago = Pago::where('codigo', $code)->where('cobrador_id', auth()->user()->id)->first();
 
             $data['fecha_pago'] = now()->format('Y-m-d');
@@ -80,12 +83,12 @@ class PagoController extends Controller
                     'estado' => 'completado',
                 ]);
             }
-
             Historial::create([
                 'cobrador_id' => auth()->user()->id,
                 'prestamo_id' => $pago->prestamo_id,
                 'pago_id' => $pago->id,
                 'monto' => $data['monto_pagado'],
+                'estado' => $data['estado'],
             ]);
 
             $data['monto_pagado'] += $pago->monto_pagado;

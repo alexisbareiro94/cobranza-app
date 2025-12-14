@@ -123,12 +123,12 @@
                                     <td class="py-3 px-4 border-b">
                                         <span id="prueba" @class([
                                             'text-xs px-2 py-1 rounded font-semibold',
-                                            'bg-yellow-200 text-yellow-700' => $item->pago->estado == 'pendiente',
-                                            'bg-orange-200 text-orange-700' => $item->pago->estado == 'parcial',
-                                            'bg-red-200 text-red-700' => $item->pago->estado == 'no_pagado',
-                                            'bg-green-200 text-green-700' => $item->pago->estado == 'pagado',
+                                            'bg-yellow-200 text-yellow-700' => $item->estado == 'pendiente',
+                                            'bg-orange-200 text-orange-700' => $item->estado == 'parcial',
+                                            'bg-red-200 text-red-700' => $item->estado == 'no_pagado',
+                                            'bg-green-200 text-green-700' => $item->estado == 'pagado',
                                         ])>
-                                            {{ set_estado_pago($item->pago->estado) }}
+                                            {{ set_estado_pago($item->estado) }}
                                         </span>
                                     </td>
                                     <td class="py-3 px-4 border-b text-sm text-gray-500">#{{ $item->pago->codigo }}</td>

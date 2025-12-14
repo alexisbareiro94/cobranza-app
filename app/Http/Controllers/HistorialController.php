@@ -18,12 +18,14 @@ class HistorialController extends Controller
     public function index_view()
     {
         $historial = Historial::with('pago.cliente', 'prestamo')
+            ->where('cobrador_id', auth()->user()->id)
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
         $clientes = Cliente::where('cobrador_id', auth()->user()->id)->get();
 
         $auditorias = Auditoria::with('user')
+            ->where('cobrador_id', auth()->user()->id)
             ->orderBy('created_at', 'desc')
             ->paginate(10, ['*'], 'audit_page');
 

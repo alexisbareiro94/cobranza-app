@@ -18,7 +18,9 @@
                     {{ set_ciudad($prestamo->cliente->ciudad) }}</p>
                 <p class="text-sm font-bold text-gray-600 mt-1">
                     {{-- monto --}}
-                    Gs. {{ format_monto($prestamo->monto_cuota - $prestamo->proximo_pago->monto_pagado) }} |
+                    Gs.
+                    {{ format_monto($prestamo->proximo_pago->monto_esperado - $prestamo->proximo_pago->monto_pagado) }}
+                    |
                     {{-- vence/vencio --}}
                     {{ verificar_fecha($prestamo->proximo_pago->vencimiento) }}
                     {{-- fecha/hoy --}}

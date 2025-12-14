@@ -3,7 +3,6 @@
 namespace App\Traits;
 
 use App\Models\Auditoria;
-use Illuminate\Support\Facades\Auth;
 
 trait Auditable
 {
@@ -25,7 +24,8 @@ trait Auditable
     protected static function audit($accion, $model)
     {
         Auditoria::create([
-            'user_id' => Auth::id(),
+            'user_id' => auth()->user()->id ?? null,
+            'cobrador_id' => auth()->user()->id ?? null,
             'accion' => $accion,
             'modelo_afectado' => get_class($model),
             'registro_id' => $model->id,

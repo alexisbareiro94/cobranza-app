@@ -136,16 +136,24 @@ document.getElementById('add-cliente-form').addEventListener('submit', async e =
         if (imagen) {
             imagen.value = "";
         }
-        document.getElementById('modal-add-cliente').classList.add('hidden')
-        await renderClientes();
-        showToast('Cliente Agregado correctamente!');
-        console.log(data)
+        // document.getElementById('modal-add-cliente').classList.add('hidden')
+        // await renderClientes();
+        window.location.href = '/';
+        localStorage.setItem('cliente_registrado', true);
+        // showToast('Cliente Agregado correctamente!');
     } catch (err) {
         showToast(`${err.error}`)
         console.log(err)
     }
 })
 
+
+document.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('cliente_registrado')) {
+        showToast('Cliente Agregado correctamente!');
+        localStorage.removeItem('cliente_registrado');
+    }
+})
 
 export async function renderClientes() {
     try {
@@ -158,17 +166,17 @@ export async function renderClientes() {
         let count = 0;
         for(const cliente of data) {
             if(count == 4) break;
-            const telefono = cliente.telefono ?                
+            const telefono = cliente.telefono ?
                 ` <p class="text-sm text-gray-500 mt-1">
                 📞 ${cliente.telefono}
                 </p>` : '';
-             
 
-            const activo = cliente.activo ? 
+
+            const activo = cliente.activo ?
                 `<span class="px-2 py-1 mt-1 text-xs font-medium bg-green-100 text-green-700 rounded-full">Activo</span>` : '';
 
 
-            const correo = cliente.correo ? 
+            const correo = cliente.correo ?
                 `<p class="text-sm text-gray-500">📧 ${cliente.correo ?? 'Sin correo'}</p>` : '';
 
             const div = document.createElement('div');
@@ -177,8 +185,8 @@ export async function renderClientes() {
                 <div class="w-22 h-24 rounded-xl overflow-hidden flex-shrink-0 bg-white">
                     <!-- @if ($cliente->imagen)
                         {{-- <img src="{{ asset('storage/' . $cliente->imagen) }}" alt="{{ $cliente->nombre }}" class="w-full h-full object-cover"> --}}
-                    @else 
-                        
+                    @else
+
                     @endif -->
 
                     <div class="flex items-center justify-center w-full h-full text-gray-400">
