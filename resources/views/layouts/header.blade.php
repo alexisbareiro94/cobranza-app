@@ -13,7 +13,7 @@
         </svg>
     </button>
 
-    <div id="drop-opciones"
+    <div id=""
         class="hidden absolute z-50 bg-gray-500 top-22 right-4 rounded-md text-white py-3 px-4 font-semibold  items-center gap-2 cursor-pointer ">
         <div id="opciones-animation" class="w-full animate-modal-in">
             <div class="flex gap-2 items-center mx-auto justify-center mb-4">
@@ -29,7 +29,8 @@
             </div>
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
-                <button class="cursor-pointer flex items-center gap-2 mx-auto justify-center transition active:scale-90">
+                <button
+                    class="cursor-pointer flex items-center gap-2 mx-auto justify-center transition active:scale-90">
                     <p>Cerrar sesion</p>
                     <i>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

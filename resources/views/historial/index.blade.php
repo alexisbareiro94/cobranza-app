@@ -15,7 +15,7 @@
             <!-- Toggle Buttons -->
             <div class="flex space-x-4 mb-6 border-b border-gray-200">
                 <button id="btn-tab-pagos" onclick="switchTab('pagos')"
-                    class="cursor-pointer py-2 px-4 border-b-2 border-blue-600 text-blue-600 font-medium focus:outline-none">
+                    class="cursor-pointer py-2 px-4 border-b-2 border-green-600 text-green-600 font-medium focus:outline-none">
                     Historial de Pagos
                 </button>
                 <button id="btn-tab-auditoria" onclick="switchTab('auditoria')"
@@ -63,7 +63,7 @@
                         class="text-sm px-3 py-2 border border-gray-300 rounded-md w-24">
 
                     <button id="btn-filtrar"
-                        class="text-sm font-semibold bg-blue-600 text-white px-3 py-2 rounded hover:bg-blue-700">
+                        class="text-sm font-semibold bg-green-600 text-white px-3 py-2 rounded hover:bg-green-700">
                         Filtrar
                     </button>
 
@@ -91,7 +91,7 @@
                                     placeholder="Search branch name..." required />
                             </div>
                             <button type="submit"
-                                class="bg-blue-500 rounded-md inline-flex items-center justify-center shrink-0 text-white bg-brand hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs rounded-base w-10 h-10 focus:outline-none">
+                                class="bg-green-500 rounded-md inline-flex items-center justify-center shrink-0 text-white bg-brand hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs rounded-base w-10 h-10 focus:outline-none">
                                 <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
                                     height="24" fill="none" viewBox="0 0 24 24">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
@@ -135,7 +135,7 @@
                                     <td class="py-3 px-4 border-b">
                                         <div class="flex items-center space-x-4">
                                             <button data-id="{{ $item->id }}"
-                                                class="editar-pago text-blue-600 hover:text-blue-800 text-sm cursor-pointer transition-all active:scale-90">
+                                                class="editar-pago text-green-600 hover:text-green-800 text-sm cursor-pointer transition-all active:scale-90">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                     viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                     class="size-6">
@@ -232,18 +232,18 @@
             const contAudit = document.getElementById('contenedor-auditoria');
 
             if (tab === 'pagos') {
-                btnPagos.classList.add('border-blue-600', 'text-blue-600');
+                btnPagos.classList.add('border-green-600', 'text-green-600');
                 btnPagos.classList.remove('border-transparent', 'text-gray-500');
-                btnAudit.classList.remove('border-blue-600', 'text-blue-600');
+                btnAudit.classList.remove('border-green-600', 'text-green-600');
                 btnAudit.classList.add('border-transparent', 'text-gray-500');
 
                 contPagos.classList.remove('hidden');
                 contAudit.classList.add('hidden');
                 // Update URL without reload to persist state if desired, or allow native behavior
             } else {
-                btnAudit.classList.add('border-blue-600', 'text-blue-600');
+                btnAudit.classList.add('border-green-600', 'text-green-600');
                 btnAudit.classList.remove('border-transparent', 'text-gray-500');
-                btnPagos.classList.remove('border-blue-600', 'text-blue-600');
+                btnPagos.classList.remove('border-green-600', 'text-green-600');
                 btnPagos.classList.add('border-transparent', 'text-gray-500');
 
                 contAudit.classList.remove('hidden');

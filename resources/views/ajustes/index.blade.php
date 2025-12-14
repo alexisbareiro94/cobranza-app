@@ -15,20 +15,41 @@
             <div class="border-b border-gray-200">
                 <nav class="flex -mb-px overflow-x-auto">
                     <button data-tab="perfil"
-                        class="tab-button active whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm transition-all">
-                        👤 Perfil
+                        class="flex items-center gap-2 tab-button active whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm transition-all">
+                        <i> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="size-5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                            </svg></i>
+                        Perfil
                     </button>
                     <button data-tab="prestamos"
-                        class="tab-button whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm transition-all">
-                        💰 Préstamos
+                        class="flex items-center gap-2 tab-button whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                        </svg>
+                        Préstamos
                     </button>
                     <button data-tab="recibos"
-                        class="tab-button whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm transition-all">
-                        📄 Recibos
+                        class="flex items-center gap-2 tab-button whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-5">
+                            <path fill-rule="evenodd"
+                                d="M5.617 2.076a1 1 0 0 1 1.09.217L8 3.586l1.293-1.293a1 1 0 0 1 1.414 0L12 3.586l1.293-1.293a1 1 0 0 1 1.414 0L16 3.586l1.293-1.293A1 1 0 0 1 19 3v18a1 1 0 0 1-1.707.707L16 20.414l-1.293 1.293a1 1 0 0 1-1.414 0L12 20.414l-1.293 1.293a1 1 0 0 1-1.414 0L8 20.414l-1.293 1.293A1 1 0 0 1 5 21V3a1 1 0 0 1 .617-.924ZM9 7a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2H9Zm0 4a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2H9Zm0 4a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2H9Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        Recibos
                     </button>
                     <button data-tab="password"
-                        class="tab-button whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm transition-all">
-                        🔒 Contraseña
+                        class="flex items-center gap-2 tab-button whitespace-nowrap py-4 px-6 border-b-2 font-medium text-sm transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                        </svg>
+                        Contraseña
                     </button>
                 </nav>
             </div>
@@ -141,11 +162,12 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <!-- Tasa de Interés -->
                             <div>
-                                <label for="tasa_interes_default" class="block text-sm font-medium text-gray-700 mb-2">Tasa
+                                <label for="tasa_interes_default"
+                                    class="block text-sm font-medium text-gray-700 mb-2">Tasa
                                     de
                                     Interés por Defecto (%)*</label>
-                                <input type="number" id="tasa_interes_default" name="tasa_interes_default" step="0.01"
-                                    value="{{ $configPrestamos->tasa_interes_default }}" required
+                                <input type="number" id="tasa_interes_default" name="tasa_interes_default"
+                                    step="0.01" value="{{ $configPrestamos->tasa_interes_default }}" required
                                     class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent">
                             </div>
 
