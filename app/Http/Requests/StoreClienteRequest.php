@@ -30,7 +30,7 @@ class StoreClienteRequest extends FormRequest
             'telefono' => 'required|numeric',
             'direccion' => 'required|string',
             'geo' => 'required',
-            'imagen' => 'nullable|image',            
+            'imagen' => 'nullable|image',
             'referencia' => 'nullable',
             'nro_ci' => ['required','numeric', Rule::unique('clientes')->where(function($q){
                 $q->where('cobrador_id', auth()->user()->id);

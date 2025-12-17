@@ -6,7 +6,7 @@ document.getElementById('input-buscar-cliente').addEventListener('input', e => {
     clearTimeout(timeOut);
     timeOut = setTimeout(async () => {
         const q = e.target.value.trim()
-        try {            
+        try {
             const res = await axios.get(`/api/cliente?q=${q}`);
             const data = res.data.data;
             console.log(res)
@@ -69,43 +69,42 @@ function setClienteId() {
     const btns = document.querySelectorAll('.clientes-to-select');
     const clienteIdInput = document.getElementById('cliente_id');
     const clienteSelCont = document.getElementById('cliente-seleccionado-cont');
-    const btnBuscarCliente = document.getElementById('btn-buscar-cliente');
+    const boxSinCliente = document.getElementById('box-sin-cliente');
+    const badgeClientePendiente = document.getElementById('badge-cliente-pendiente');
+    const clienteNombreDisplay = document.getElementById('cliente-nombre-display');
 
     btns.forEach(btn => {
         btn.addEventListener('click', async () => {
             const id = btn.dataset.id;
             const cliente = await getCliente(id);
             clienteIdInput.value = id;
-            btnBuscarCliente.innerText = 'Cambiar'
+
+            // Ocultar la caja de selección y el badge
+            if (boxSinCliente) boxSinCliente.classList.add('hidden');
+            if (badgeClientePendiente) badgeClientePendiente.classList.add('hidden');
+
+            // Mostrar el contenedor de cliente seleccionado
             clienteSelCont.classList.remove('hidden');
-            clienteSelCont.innerHTML = ` 
-                                <span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                    </svg>
-                                </span>                                
-                                ${cliente.nombre}
-                                <button id="deselect-cliente" 
-                                        type="button"
-                                        class="group ml-4 px-1 py-1 font-semibold bg-white border border-white active:border-gray-300 rounded-md transition active:text-red-500 active:scale-50 cursor-pointer"        
-                                >   
-                                    <span class="">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="3" stroke="currentColor" class="size-4">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                                        </svg>
-                                    </span>
-                                </button>`
+
+            // Actualizar el nombre del cliente
+            if (clienteNombreDisplay) {
+                clienteNombreDisplay.textContent = cliente.nombre;
+            }
 
             document.getElementById('modal-buscar-cliente').classList.add('hidden');
 
-            if (document.getElementById('deselect-cliente')) {
-                document.getElementById('deselect-cliente').addEventListener('click', () => {
+            // Configurar botón de cambiar cliente
+            const btnCambiarCliente = document.getElementById('btn-cambiar-cliente');
+            if (btnCambiarCliente) {
+                btnCambiarCliente.onclick = () => {
+                    // Mostrar nuevamente la caja de selección
+                    if (boxSinCliente) boxSinCliente.classList.remove('hidden');
+                    if (badgeClientePendiente) badgeClientePendiente.classList.remove('hidden');
                     clienteSelCont.classList.add('hidden');
-                    clienteSelCont.innerHTML = '';
                     clienteIdInput.value = "";
-                    btnBuscarCliente.innerText = 'Seleccionar Cliente'
-                });
+                    // Abrir modal de búsqueda
+                    document.getElementById('modal-buscar-cliente').classList.remove('hidden');
+                };
             }
         });
     });

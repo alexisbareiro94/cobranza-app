@@ -67,7 +67,7 @@ function calculateMontoCuota() {
 
     if (montoTotal > 0 && cantidadCuotas > 0) {
         const cuota = montoTotal / cantidadCuotas;
-        montoCuotaInput.value = cuota.toFixed(2);
+        montoCuotaInput.value = Math.round(cuota);
     }
 }
 
@@ -79,7 +79,7 @@ function calculateMontoTotal() {
     const interes = montoPrestado * (porcentajeInteres / 100);
     const total = montoPrestado + interes;
 
-    montoTotalInput.value = total.toFixed(2);
+    montoTotalInput.value = Math.round(total);
 
     // If quantity of quotas is set, recalculate quota amount, otherwise maybe calc quantity if quota amount is set?
     // User requested "recommended value of quota amount", so we assume quantity is the driver if present.
@@ -158,13 +158,13 @@ document.getElementById('add-contrato-form').addEventListener('submit', e => {
     // Populate Confirmation Modal
     const clienteNombreTexto = document.getElementById('cliente-seleccionado-cont').innerText.trim().replace(/\s+/g, ' ');
 
-    document.getElementById('conf-monto-prestado').innerText = parseFloat(document.getElementById('monto_prestado').value).toFixed(2);
-    document.getElementById('conf-monto-total').innerText = parseFloat(document.getElementById('monto_total').value).toFixed(2);
+    document.getElementById('conf-monto-prestado').innerText = Math.round(parseFloat(document.getElementById('monto_prestado').value));
+    document.getElementById('conf-monto-total').innerText = Math.round(parseFloat(document.getElementById('monto_total').value));
     document.getElementById('conf-cliente').innerText = clienteNombreTexto || 'Cliente Seleccionado';
     document.getElementById('conf-interes').innerText = document.getElementById('porcentaje_interes').value + '%';
-    document.getElementById('conf-mora').innerText = parseFloat(document.getElementById('monto_mora').value).toFixed(2);
+    document.getElementById('conf-mora').innerText = Math.round(parseFloat(document.getElementById('monto_mora').value));
     document.getElementById('conf-cuotas').innerText = document.getElementById('cantidad_cuotas').value;
-    document.getElementById('conf-monto-cuota').innerText = parseFloat(document.getElementById('monto_cuota').value).toFixed(2);
+    document.getElementById('conf-monto-cuota').innerText = Math.round(parseFloat(document.getElementById('monto_cuota').value));
     document.getElementById('conf-frecuencia').innerText = document.getElementById('rango').value;
     document.getElementById('conf-fecha-fin').innerText = document.getElementById('fecha_fin_estimado').value;
 
@@ -172,6 +172,10 @@ document.getElementById('add-contrato-form').addEventListener('submit', e => {
 });
 
 document.getElementById('btn-cancelar-confirmacion').addEventListener('click', () => {
+    document.getElementById('modal-confirmar-contrato').classList.add('hidden');
+});
+
+document.getElementById('btn-cerrar-confirmacion').addEventListener('click', () => {
     document.getElementById('modal-confirmar-contrato').classList.add('hidden');
 });
 
